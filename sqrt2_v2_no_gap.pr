@@ -1,0 +1,737 @@
+:- initialize.
+
+:- needs_gr(nat).
+:- needs_thm(nat).
+
+
+:- needs_gr(gcd).
+:- needs_thm(gcd).
+
+:- compile_gr(sqrt2).
+:- needs_gr(sqrt2).
+:- tex_file(sqrt2_v2_no_gap).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+:- definition_pred(coprime,2,
+all [p,q]: coprime(?p,?q) 
+<=> (all r: succeeds nat(?r) & divisor(?r,?p) & divisor(?r,?q) => ?r = s(0))).
+
+:- lemma(square:existence,
+all n: succeeds nat(?n) => (ex p: succeeds times(?n,?n,?p)),
+assume(succeeds nat(?n),
+ [succeeds nat(?n) & succeeds nat(?n),
+  ex z: succeeds times(?n,?n,?z) by lemma(times:existence)],
+ ex p: succeeds times(?n,?n,?p))
+).
+
+:- lemma(square:uniqueness,
+all [n,sn,sp]: succeeds times(?n,?n,?sn) & succeeds times(?n,?n,?sp) => ?sn = ?sp,
+assume(succeeds times(?n,?n,?sn) & succeeds times(?n,?n,?sp),
+ [?sn = ?sp by lemma(times:uniqueness)],
+ ?sn = ?sp)
+).
+
+:- definition_fun(square,1,
+all [n,p]: succeeds nat(?n) => (square(?n) = ?p <=> succeeds times(?n,?n,?p)),
+existence by lemma(square:existence),
+uniqueness by lemma(square:uniqueness)).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% LLM-generated
+:- lemma(nat:natsquare,
+all n: succeeds nat(?n) => succeeds nat(square(?n)),
+assume(succeeds nat(?n),
+ [succeeds times(?n,?n,square(?n)) by existence(square,1),
+  succeeds times(?n,?n,square(?n)) & succeeds nat(?n) => 
+    succeeds nat(square(?n)) by lemma(times:types:2),
+  succeeds nat(square(?n))],
+ succeeds nat(square(?n)))
+).
+
+% LLM-generated
+:- lemma(sqr2:4, 
+square(s(s(0))) = s(s(s(s(0)))),
+[succeeds nat(0),
+ succeeds nat(s(0)),
+ succeeds nat(s(s(0))),
+ % times(s(s(0)), s(s(0)), 4) se décompose en :
+ % times(s(0), s(s(0)), a) et plus(s(s(0)), a, 4)
+ % times(s(0), s(s(0)), 2) se décompose en :
+ % times(0, s(s(0)), 0) et plus(s(s(0)), 0, 2)
+ succeeds times(0,s(s(0)),0),
+ succeeds plus(s(s(0)),0,s(s(0))),
+ succeeds times(s(0),s(s(0)),s(s(0))),
+ % plus(s(s(0)), s(s(0)), s(s(s(s(0)))))
+ succeeds plus(s(0),s(s(0)),s(s(s(0)))),
+ succeeds plus(s(s(0)),s(s(0)),s(s(s(s(0))))),
+ succeeds times(s(s(0)),s(s(0)),s(s(s(s(0))))),
+ square(s(s(0))) = s(s(s(s(0)))) by uniqueness(square,1)]
+).
+
+
+% LLM-generated
+:- lemma(twotimes:even,
+all [n,p]: succeeds nat(?p) & s(s(0)) @* ?p = ?n => succeeds even(?n),
+induction(
+ [all p: succeeds nat(?p) => (all n: s(s(0)) @* ?p = ?n => succeeds even(?n))],
+ [step([],
+   [],
+   assume(s(s(0)) @* 0 = ?n,
+    [succeeds nat(s(s(0))),
+     s(s(0)) @* 0 = 0 by lemma(times:zero),
+     ?n = 0,
+     succeeds even(0)],
+    succeeds even(?n)),
+   all n: s(s(0)) @* 0 = ?n => succeeds even(?n)),
+  step([p],
+   [all n: s(s(0)) @* ?p = ?n => succeeds even(?n),
+    succeeds nat(?p)],
+   assume(s(s(0)) @* s(?p) = ?n,
+    [succeeds nat(s(0)),
+     succeeds nat(s(s(0))),
+     succeeds nat(s(?p)),
+     s(s(0)) @* s(?p) = s(?p) @+ s(0) @* s(?p) by corollary(times:successor),
+     s(0) @* s(?p) = s(?p) by lemma(times:one),
+     s(s(0)) @* s(?p) = s(?p) @+ s(?p),
+     s(?p) @+ s(?p) = s(?p @+ s(?p)) by corollary(plus:successor),
+     ?p @+ s(?p) = s(?p) @+ ?p by theorem(plus:commutative),
+     s(?p) @+ ?p = s(?p @+ ?p) by corollary(plus:successor),
+     ?p @+ s(?p) = s(?p @+ ?p),
+     s(?p) @+ s(?p) = s(s(?p @+ ?p)),
+     succeeds nat(?p @+ ?p) by corollary(plus:types),
+     s(s(0)) @* ?p = ?p @+ s(0) @* ?p by corollary(times:successor),
+     s(0) @* ?p = ?p by lemma(times:one),
+     s(s(0)) @* ?p = ?p @+ ?p,
+     s(s(0)) @* ?p = ?p @+ ?p => succeeds even(?p @+ ?p),
+     succeeds even(?p @+ ?p),
+     s(s(0)) @* s(?p) = s(s(?p @+ ?p)),
+     ?n = s(s(?p @+ ?p)),
+     succeeds even(s(s(?p @+ ?p))),
+     succeeds even(?n)],
+    succeeds even(?n)),
+   all n: s(s(0)) @* s(?p) = ?n => succeeds even(?n))])
+).
+
+% LLM-generated
+:- lemma(even:twotimes,
+all n: succeeds even(?n) => (ex p: succeeds nat(?p) & ?n = s(s(0)) @* ?p),
+induction(
+ [all n: succeeds even(?n) => (ex p: succeeds nat(?p) & ?n = s(s(0)) @* ?p)],
+ [step([],
+   [],
+   [succeeds nat(s(s(0))),
+    s(s(0)) @* 0 = 0 by lemma(times:zero),
+    succeeds nat(0) & 0 = s(s(0)) @* 0,
+    ex p: succeeds nat(?p) & 0 = s(s(0)) @* ?p],
+   ex p: succeeds nat(?p) & 0 = s(s(0)) @* ?p),
+  step([n],
+   [ex p: succeeds nat(?p) & ?n = s(s(0)) @* ?p,
+    succeeds even(?n)],
+   exist(p,
+    succeeds nat(?p) & ?n = s(s(0)) @* ?p,
+    [succeeds nat(s(0)),
+     succeeds nat(s(s(0))),
+     succeeds nat(s(?p)),
+     s(s(0)) @* s(?p) = s(?p) @+ s(0) @* s(?p) by corollary(times:successor),
+     s(0) @* s(?p) = s(?p) by lemma(times:one),
+     s(s(0)) @* s(?p) = s(?p) @+ s(?p),
+     s(?p) @+ s(?p) = s(?p @+ s(?p)) by corollary(plus:successor),
+     ?p @+ s(?p) = s(?p) @+ ?p by theorem(plus:commutative),
+     s(?p) @+ ?p = s(?p @+ ?p) by corollary(plus:successor),
+     ?p @+ s(?p) = s(?p @+ ?p),
+     s(?p) @+ s(?p) = s(s(?p @+ ?p)),
+     succeeds nat(?p @+ ?p) by corollary(plus:types),
+     s(s(0)) @* ?p = ?p @+ s(0) @* ?p by corollary(times:successor),
+     s(0) @* ?p = ?p by lemma(times:one),
+     s(s(0)) @* ?p = ?p @+ ?p,
+     s(s(?n)) = s(s(s(s(0)) @* ?p)) = s(s(?p @+ ?p)) = s(?p) @+ s(?p) = s(s(0)) @* s(?p),
+     succeeds nat(s(?p)) & s(s(?n)) = s(s(0)) @* s(?p),
+     ex p: succeeds nat(?p) & s(s(?n)) = s(s(0)) @* ?p],
+    ex p: succeeds nat(?p) & s(s(?n)) = s(s(0)) @* ?p),
+   ex p: succeeds nat(?p) & s(s(?n)) = s(s(0)) @* ?p)])
+).
+
+% LLM-inferred and LLM-generated
+:- lemma(times:injective:second,
+all [x,y,z]: succeeds nat(?x) & succeeds nat(?y) & succeeds nat(?z) &
+  s(?x) @* ?y = s(?x) @* ?z => ?y = ?z,
+assume(succeeds nat(?x) & succeeds nat(?y) & succeeds nat(?z) &
+  s(?x) @* ?y = s(?x) @* ?z,
+ [succeeds nat(s(?x)),
+  succeeds nat(s(?x) @* ?y) by corollary(times:types),
+  succeeds nat(s(?x) @* ?z) by corollary(times:types),
+  succeeds s(?x) @* ?z @=< s(?x) @* ?z by theorem(leq:reflexive),
+  succeeds s(?x) @* ?y @=< s(?x) @* ?z,
+  succeeds ?y @=< ?z by lemma(leq:times:inverse),
+  succeeds s(?x) @* ?y @=< s(?x) @* ?y by theorem(leq:reflexive),
+  succeeds s(?x) @* ?z @=< s(?x) @* ?y,
+  succeeds ?z @=< ?y by lemma(leq:times:inverse),
+  ?y = ?z by theorem(leq:antisymmetric)],
+ ?y = ?z)
+).
+
+% LLM-generated
+:- lemma(simplify:by2,
+all [n,p]: succeeds nat(?n) & succeeds nat(?p) & s(s(s(s(0)))) @* ?n = s(s(0)) @* ?p => s(s(0)) @* ?n = ?p,
+assume(succeeds nat(?n) & succeeds nat(?p) & s(s(s(s(0)))) @* ?n = s(s(0)) @* ?p,
+ [succeeds nat(0),
+  succeeds nat(s(0)),
+  succeeds nat(s(s(0))),
+  % Calcul de 0 + s(s(0)) = s(s(0))
+  0 @+ s(s(0)) = s(s(0)) by corollary(plus:zero),
+  % Calcul de s(0) + s(s(0)) = s(s(s(0)))
+  s(0) @+ s(s(0)) = s(0 @+ s(s(0))) by corollary(plus:successor),
+  s(0) @+ s(s(0)) = s(s(s(0))),
+  % Calcul de s(s(0)) + s(s(0)) = s(s(s(s(0))))
+  s(s(0)) @+ s(s(0)) = s(s(0) @+ s(s(0))) by corollary(plus:successor),
+  s(s(0)) @+ s(s(0)) = s(s(s(s(0)))),
+  % 4 = 2 * 2
+  s(s(0)) @* s(s(0)) = s(s(0)) @+ s(0) @* s(s(0)) by corollary(times:successor),
+  s(0) @* s(s(0)) = s(s(0)) by lemma(times:one),
+  s(s(0)) @* s(s(0)) = s(s(0)) @+ s(s(0)),
+  s(s(0)) @* s(s(0)) = s(s(s(s(0)))),
+  % 4*n = (2*2)*n = 2*(2*n)
+  succeeds nat(s(s(0)) @* ?n) by corollary(times:types),
+  s(s(0)) @* s(s(0)) @* ?n = s(s(0)) @* (s(s(0)) @* ?n) by theorem(times:associative),
+  s(s(s(s(0)))) @* ?n = s(s(0)) @* (s(s(0)) @* ?n),
+  % donc 2*(2*n) = 2*p
+  s(s(0)) @* (s(s(0)) @* ?n) = s(s(0)) @* ?p,
+  % par injectivité de la multiplication par s(s(0))
+  s(s(0)) @* ?n = ?p by lemma(times:injective:second)],
+ s(s(0)) @* ?n = ?p)
+).
+
+
+% LLM-generated
+:- lemma(even:div2,
+all n: succeeds even(?n) => divisor(s(s(0)),?n),
+assume(succeeds even(?n),
+ [ex p: succeeds nat(?p) & ?n = s(s(0)) @* ?p by lemma(even:twotimes),
+  exist(p,
+   succeeds nat(?p) & ?n = s(s(0)) @* ?p,
+   [s(s(0)) @* ?p = ?n,
+    ex z: succeeds nat(?z) & s(s(0)) @* ?z = ?n,
+    divisor(s(s(0)),?n) by introduction(divisor,2)],
+   divisor(s(s(0)),?n))],
+ divisor(s(s(0)),?n))
+).
+
+
+
+
+% LLM-generated
+:- lemma(npq:nnppqq,
+all [n,p,q]: succeeds nat(?p) & succeeds nat(?q) & ?n = ?p @* ?q => 
+  square(?n) = square(?p) @* square(?q),
+assume(succeeds nat(?p) & succeeds nat(?q) & ?n = ?p @* ?q,
+ [succeeds nat(?p @* ?q) by corollary(times:types),
+  succeeds nat(?n),
+  succeeds nat(square(?p)) by lemma(nat:natsquare),
+  succeeds nat(square(?q)) by lemma(nat:natsquare),
+  % square(p) = p * p via times
+  succeeds times(?p,?p,square(?p)) by existence(square,1),
+  ?p @* ?p = square(?p) by uniqueness(@*,2),
+  % square(q) = q * q via times
+  succeeds times(?q,?q,square(?q)) by existence(square,1),
+  ?q @* ?q = square(?q) by uniqueness(@*,2),
+  % square(n) = n * n via times
+  succeeds times(?n,?n,square(?n)) by existence(square,1),
+  ?n @* ?n = square(?n) by uniqueness(@*,2),
+  % Calculs préliminaires de typage
+  succeeds nat(?q @* ?p) by corollary(times:types),
+  succeeds nat(?p @* ?q) by corollary(times:types),
+  succeeds nat(?q @* ?q) by corollary(times:types),
+  succeeds nat(?p @* ?p) by corollary(times:types),
+  succeeds nat(?p @* ?q @* ?q) by corollary(times:types),
+  succeeds nat(?p @* (?q @* ?q)) by corollary(times:types),
+  % (p*q) * (p*q) = p * (q * (p*q)) par associativité
+  ?p @* ?q @* (?p @* ?q) = ?p @* (?q @* (?p @* ?q)) by theorem(times:associative),
+  % q * p * q = q * (p * q) par associativité
+  ?q @* ?p @* ?q = ?q @* (?p @* ?q) by theorem(times:associative),
+  % q*p = p*q par commutativité
+  ?q @* ?p = ?p @* ?q by theorem(times:commutative),
+  ?p @* ?q @* ?q = ?q @* ?p @* ?q,
+  ?q @* ?p @* ?q = ?q @* (?p @* ?q),
+  ?p @* ?q @* ?q = ?q @* (?p @* ?q),
+  ?p @* (?q @* (?p @* ?q)) = ?p @* (?p @* ?q @* ?q),
+  % p * q * q = p * (q * q) par associativité
+  ?p @* ?q @* ?q = ?p @* (?q @* ?q) by theorem(times:associative),
+  ?p @* (?p @* ?q @* ?q) = ?p @* (?p @* (?q @* ?q)),
+  % p * p * (q * q) = p * (p * (q * q)) par associativité
+  ?p @* ?p @* (?q @* ?q) = ?p @* (?p @* (?q @* ?q)) by theorem(times:associative),
+  ?p @* (?p @* (?q @* ?q)) = ?p @* ?p @* (?q @* ?q),
+  ?p @* ?q @* (?p @* ?q) = ?p @* (?p @* ?q @* ?q),
+  ?p @* (?p @* ?q @* ?q) = ?p @* ?p @* (?q @* ?q),
+  ?p @* ?q @* (?p @* ?q) = ?p @* ?p @* (?q @* ?q),
+  square(?p) @* square(?q) = ?p @* ?p @* (?q @* ?q),
+  ?n @* ?n = ?p @* ?q @* (?p @* ?q),
+  ?n @* ?n = ?p @* ?p @* (?q @* ?q),
+  ?n @* ?n = square(?p) @* square(?q),
+  square(?n) = square(?p) @* square(?q)],
+ square(?n) = square(?p) @* square(?q))
+).
+
+/*
+Ce lemme nécessite des hypothèses sur les naturels pour pouvoir utiliser
+les théorèmes d'associativité et de commutativité. 
+L'idée de la preuve :
+
+On établit que tous les termes impliqués sont des naturels
+On utilise les définitions de square pour avoir square(?x) = ?x @* ?x
+On calcule (p*q)*(p*q) = p*(q*(p*q)) = p*(p*q*q) = p*p*(q*q) = square(p)*square(q)
+en utilisant l'associativité et la commutativité de la multiplication
+*/
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+:- lemma(even:succ:odd,
+all p: succeeds even(?p) => succeeds odd(s(?p)),
+induction(
+ [all p: succeeds even(?p) => succeeds odd(s(?p))],
+ [step([],
+   [],
+   succeeds odd(s(0)),
+   succeeds odd(s(0))),
+  step([p],
+   [succeeds odd(s(?p)),
+    succeeds even(?p)],
+   succeeds odd(s(s(s(?p)))),
+   succeeds odd(s(s(s(?p)))))])
+).
+
+:- lemma(odd:succ:even,
+all p: succeeds odd(?p) => succeeds even(s(?p)),
+induction(
+ [all p: succeeds odd(?p) => succeeds even(s(?p))],
+ [step([],
+   [],
+   succeeds even(s(s(0))),
+   succeeds even(s(s(0)))),
+  step([p],
+   [succeeds even(s(?p)),
+    succeeds odd(?p)],
+   succeeds even(s(s(s(?p)))),
+   succeeds even(s(s(s(?p)))))])
+).
+/*
+L'idée des preuves :
+
+Pour even:succ:odd : on fait une induction sur la structure de succeeds even(?p)
+
+Cas de base : even(0) implique odd(s(0)) qui est vrai par définition
+Cas inductif : si even(?p) implique odd(s(?p)), alors even(s(s(?p))) implique odd(s(s(s(?p)))) qui est vrai car odd(s(s(x))) :- odd(x) et on a odd(s(?p)) par hypothèse d'induction
+
+
+Pour odd:succ:even : on fait une induction sur la structure de succeeds odd(?p)
+
+Cas de base : odd(s(0)) implique even(s(s(0))) qui est vrai par définition
+Cas inductif : si odd(?p) implique even(s(?p)), alors odd(s(s(?p))) implique even(s(s(s(?p)))) qui est vrai car even(s(s(x))) :- even(x) et on a even(s(?p)) par hypothèse d'induction
+*/
+
+:- lemma(nat:even:disj:odd,
+all p: succeeds nat(?p) => succeeds even(?p) \/ succeeds odd(?p),
+induction(
+ [all p: succeeds nat(?p) => succeeds even(?p) \/ succeeds odd(?p)],
+ [step([],
+   [],
+   succeeds even(0),
+   succeeds even(0) \/ succeeds odd(0)),
+  step([p],
+   [succeeds even(?p) \/ succeeds odd(?p),
+    succeeds nat(?p)],
+   cases(succeeds even(?p),
+    [succeeds odd(s(?p)) by lemma(even:succ:odd),
+     succeeds even(s(?p)) \/ succeeds odd(s(?p))],
+    succeeds odd(?p),
+    [succeeds even(s(?p)) by lemma(odd:succ:even),
+     succeeds even(s(?p)) \/ succeeds odd(s(?p))],
+    succeeds even(s(?p)) \/ succeeds odd(s(?p))),
+   succeeds even(s(?p)) \/ succeeds odd(s(?p)))])
+).
+
+
+:- lemma(nat:even:termination,
+all n: succeeds nat(?n) => terminates even(?n) & terminates even(s(?n)),
+induction(
+ [all n: succeeds nat(?n) => terminates even(?n) & terminates even(s(?n))],
+ [step([],
+   [],
+   [terminates even(0) by completion,
+    terminates even(s(0)) by completion],
+   terminates even(0) & terminates even(s(0))),
+  step([n],
+   [terminates even(?n) & terminates even(s(?n)),
+    succeeds nat(?n)],
+   [terminates even(?n),
+    terminates even(s(?n)),
+    terminates even(s(s(?n))) by completion,
+    terminates even(s(?n)) & terminates even(s(s(?n)))],
+   terminates even(s(?n)) & terminates even(s(s(?n))))])
+).
+
+:- corollary(even:termination,
+all n: succeeds nat(?n) => terminates even(?n),
+assume(succeeds nat(?n),
+ [succeeds nat(?n) => terminates even(?n) & terminates even(s(?n)) 
+    by lemma(nat:even:termination),
+  terminates even(?n) & terminates even(s(?n)),
+  terminates even(?n)],
+ terminates even(?n))
+).
+
+% idem odd
+:- lemma(nat:odd:termination,
+all n: succeeds nat(?n) => terminates odd(?n) & terminates odd(s(?n)),
+induction(
+ [all n: succeeds nat(?n) => terminates odd(?n) & terminates odd(s(?n))],
+ [step([],
+   [],
+   [terminates odd(0) by completion,
+    terminates odd(s(0)) by completion],
+   terminates odd(0) & terminates odd(s(0))),
+  step([n],
+   [terminates odd(?n) & terminates odd(s(?n)),
+    succeeds nat(?n)],
+   [terminates odd(?n),
+    terminates odd(s(?n)),
+    terminates odd(s(s(?n))) by completion,
+    terminates odd(s(?n)) & terminates odd(s(s(?n)))],
+   terminates odd(s(?n)) & terminates odd(s(s(?n))))])
+).
+
+:- corollary(odd:termination,
+all n: succeeds nat(?n) => terminates odd(?n),
+assume(succeeds nat(?n),
+ [succeeds nat(?n) => terminates odd(?n) & terminates odd(s(?n)) 
+    by lemma(nat:odd:termination),
+  terminates odd(?n) & terminates odd(s(?n)),
+  terminates odd(?n)],
+ terminates odd(?n))
+).
+
+
+:- lemma(even:negation:odd,
+all n: succeeds even(?n) => fails odd(?n),
+induction(
+ [all n: succeeds even(?n) => fails odd(?n)],
+ [step([],
+   [],
+   fails odd(0) by completion,
+   fails odd(0)),
+  step([n],
+   [fails odd(?n),
+    succeeds even(?n)],
+   fails odd(s(s(?n))) by completion,
+   fails odd(s(s(?n))))])
+).
+
+:- lemma(odd:negation:even,
+all n: succeeds odd(?n) => fails even(?n),
+induction(
+ [all n: succeeds odd(?n) => fails even(?n)],
+ [step([],
+   [],
+   fails even(s(0)) by completion,
+   fails even(s(0))),
+  step([n],
+   [fails even(?n),
+    succeeds odd(?n)],
+   fails even(s(s(?n))) by completion,
+   fails even(s(s(?n))))])
+).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% =============================================================================
+% Lemme: even:types - un nombre pair est naturel
+% =============================================================================
+:- lemma(even:types,
+all n: succeeds even(?n) => succeeds nat(?n),
+induction(
+ [all n: succeeds even(?n) => succeeds nat(?n)],
+ [step([],
+   [],
+   succeeds nat(0),
+   succeeds nat(0)),
+  step([n],
+   [succeeds nat(?n),
+    succeeds even(?n)],
+   succeeds nat(s(s(?n))),
+   succeeds nat(s(s(?n))))])
+).
+
+% =============================================================================
+% Lemme: odd:types - un nombre impair est naturel
+% =============================================================================
+:- lemma(odd:types,
+all n: succeeds odd(?n) => succeeds nat(?n),
+induction(
+ [all n: succeeds odd(?n) => succeeds nat(?n)],
+ [step([],
+   [],
+   succeeds nat(s(0)),
+   succeeds nat(s(0))),
+  step([n],
+   [succeeds nat(?n),
+    succeeds odd(?n)],
+   succeeds nat(s(s(?n))),
+   succeeds nat(s(s(?n))))])
+).
+
+% =============================================================================
+% Lemme: impair + impair = pair
+% =============================================================================
+:- lemma(odd:plus:odd,
+all [m,n]: succeeds odd(?m) & succeeds odd(?n) => succeeds even(?m @+ ?n),
+induction(
+ [all m: succeeds odd(?m) => (all n: succeeds odd(?n) => succeeds even(?m @+ ?n))],
+ [step([],
+   [],
+   assume(succeeds odd(?n),
+    [succeeds odd(?n) => succeeds nat(?n) by lemma(odd:types),
+     succeeds nat(?n),
+     s(0) @+ ?n = s(0 @+ ?n) by corollary(plus:successor),
+     0 @+ ?n = ?n by corollary(plus:zero),
+     s(0) @+ ?n = s(?n),
+     succeeds even(s(?n)) by lemma(odd:succ:even),
+     succeeds even(s(0) @+ ?n)],
+    succeeds even(s(0) @+ ?n)),
+   all n: succeeds odd(?n) => succeeds even(s(0) @+ ?n)),
+  step([m],
+   [all n: succeeds odd(?n) => succeeds even(?m @+ ?n),
+    succeeds odd(?m)],
+   assume(succeeds odd(?n),
+    [succeeds odd(?m) => succeeds nat(?m) by lemma(odd:types),
+     succeeds nat(?m),
+     succeeds odd(?n) => succeeds nat(?n) by lemma(odd:types),
+     succeeds nat(?n),
+     succeeds nat(s(?m)),
+     succeeds nat(s(s(?m))),
+     s(s(?m)) @+ ?n = s(s(?m) @+ ?n) by corollary(plus:successor),
+     s(?m) @+ ?n = s(?m @+ ?n) by corollary(plus:successor),
+     s(s(?m)) @+ ?n = s(s(?m @+ ?n)),
+     succeeds odd(?n) => succeeds even(?m @+ ?n),
+     succeeds even(?m @+ ?n),
+     succeeds even(s(s(?m @+ ?n))),
+     succeeds even(s(s(?m)) @+ ?n)],
+    succeeds even(s(s(?m)) @+ ?n)),
+   all n: succeeds odd(?n) => succeeds even(s(s(?m)) @+ ?n))])
+).
+
+% =============================================================================
+% Lemme: pair + impair = impair
+% =============================================================================
+:- lemma(even:plus:odd,
+all [m,n]: succeeds even(?m) & succeeds odd(?n) => succeeds odd(?m @+ ?n),
+induction(
+ [all m: succeeds even(?m) => (all n: succeeds odd(?n) => succeeds odd(?m @+ ?n))],
+ [step([],
+   [],
+   assume(succeeds odd(?n),
+    [succeeds odd(?n) => succeeds nat(?n) by lemma(odd:types),
+     succeeds nat(?n),
+     0 @+ ?n = ?n by corollary(plus:zero),
+     succeeds odd(0 @+ ?n)],
+    succeeds odd(0 @+ ?n)),
+   all n: succeeds odd(?n) => succeeds odd(0 @+ ?n)),
+  step([m],
+   [all n: succeeds odd(?n) => succeeds odd(?m @+ ?n),
+    succeeds even(?m)],
+   assume(succeeds odd(?n),
+    [succeeds even(?m) => succeeds nat(?m) by lemma(even:types),
+     succeeds nat(?m),
+     succeeds odd(?n) => succeeds nat(?n) by lemma(odd:types),
+     succeeds nat(?n),
+     succeeds nat(s(?m)),
+     succeeds nat(s(s(?m))),
+     s(s(?m)) @+ ?n = s(s(?m) @+ ?n) by corollary(plus:successor),
+     s(?m) @+ ?n = s(?m @+ ?n) by corollary(plus:successor),
+     s(s(?m)) @+ ?n = s(s(?m @+ ?n)),
+     succeeds odd(?n) => succeeds odd(?m @+ ?n),
+     succeeds odd(?m @+ ?n),
+     succeeds odd(s(s(?m @+ ?n))),
+     succeeds odd(s(s(?m)) @+ ?n)],
+    succeeds odd(s(s(?m)) @+ ?n)),
+   all n: succeeds odd(?n) => succeeds odd(s(s(?m)) @+ ?n))])
+).
+
+% =============================================================================
+% Lemme: impair * impair = impair
+% =============================================================================
+:- lemma(odd:times:odd,
+all [m,n]: succeeds odd(?m) & succeeds odd(?n) => succeeds odd(?m @* ?n),
+induction(
+ [all m: succeeds odd(?m) => (all n: succeeds odd(?n) => succeeds odd(?m @* ?n))],
+ [step([],
+   [],
+   assume(succeeds odd(?n),
+    [succeeds odd(?n) => succeeds nat(?n) by lemma(odd:types),
+     succeeds nat(?n),
+     s(0) @* ?n = ?n by lemma(times:one),
+     succeeds odd(s(0) @* ?n)],
+    succeeds odd(s(0) @* ?n)),
+   all n: succeeds odd(?n) => succeeds odd(s(0) @* ?n)),
+  step([m],
+   [all n: succeeds odd(?n) => succeeds odd(?m @* ?n),
+    succeeds odd(?m)],
+   assume(succeeds odd(?n),
+    [succeeds odd(?m) => succeeds nat(?m) by lemma(odd:types),
+     succeeds nat(?m),
+     succeeds odd(?n) => succeeds nat(?n) by lemma(odd:types),
+     succeeds nat(?n),
+     succeeds nat(s(?m)),
+     succeeds nat(s(s(?m))),
+     succeeds nat(?m @* ?n) by corollary(times:types),
+     succeeds nat(?n @+ ?m @* ?n) by corollary(plus:types),
+     succeeds nat(?n @+ ?n) by corollary(plus:types),
+     s(s(?m)) @* ?n = ?n @+ s(?m) @* ?n by corollary(times:successor),
+     s(?m) @* ?n = ?n @+ ?m @* ?n by corollary(times:successor),
+     s(s(?m)) @* ?n = ?n @+ (?n @+ ?m @* ?n),
+     succeeds odd(?n) => succeeds odd(?m @* ?n),
+     succeeds odd(?m @* ?n),
+     succeeds odd(?n) & succeeds odd(?n) => succeeds even(?n @+ ?n) by lemma(odd:plus:odd),
+     succeeds odd(?n) & succeeds odd(?n),
+     succeeds even(?n @+ ?n),
+     ?n @+ ?n @+ ?m @* ?n = ?n @+ (?n @+ ?m @* ?n) by theorem(plus:associative),
+     ?n @+ (?n @+ ?m @* ?n) = ?n @+ ?n @+ ?m @* ?n,
+     succeeds even(?n @+ ?n) & succeeds odd(?m @* ?n) => 
+       succeeds odd(?n @+ ?n @+ ?m @* ?n) by lemma(even:plus:odd),
+     succeeds even(?n @+ ?n) & succeeds odd(?m @* ?n),
+     succeeds odd(?n @+ ?n @+ ?m @* ?n),
+     succeeds odd(?n @+ (?n @+ ?m @* ?n)),
+     succeeds odd(s(s(?m)) @* ?n)],
+    succeeds odd(s(s(?m)) @* ?n)),
+   all n: succeeds odd(?n) => succeeds odd(s(s(?m)) @* ?n))])
+).
+
+% =============================================================================
+% Lemme: si p est impair, alors square(p) est impair
+% =============================================================================
+:- lemma(odd:square:odd,
+all p: succeeds nat(?p) & succeeds odd(?p) => succeeds odd(square(?p)),
+assume(succeeds nat(?p) & succeeds odd(?p),
+ [succeeds odd(?p) & succeeds odd(?p) => succeeds odd(?p @* ?p) by lemma(odd:times:odd),
+  succeeds odd(?p) & succeeds odd(?p),
+  succeeds odd(?p @* ?p),
+  succeeds times(?p,?p,square(?p)) by existence(square,1),
+  ?p @* ?p = square(?p) by uniqueness(@*,2),
+  succeeds odd(square(?p))],
+ succeeds odd(square(?p)))
+).
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+/*
+Montre le lemme : 
+
+:- lemma(evenpp:evenp,
+all p: succeeds nat(?p) & succeeds even(square(?p)) => succeeds even(?p),
+ff by gap).
+
+en raisonnant par cas suivant la parité de p :
+
+- si p est pair, c'est la conclusion,
+  donc l'implication est vraie.
+
+- si p est impair, alors p*p est impair 
+  or p*p impair =>  pair(p*p) est faux
+  donc la conjonction  succeeds nat(?p) & succeeds even(square(?p))
+  est fausse et l'implication vraie.
+
+Dans tous les cas, l'implication est vraie.
+*/
+
+
+:- lemma(evenpp:evenp,
+all p: succeeds nat(?p) & succeeds even(square(?p)) => succeeds even(?p),
+assume(succeeds nat(?p) & succeeds even(square(?p)),
+ [succeeds nat(?p),
+  succeeds even(square(?p)),
+  succeeds even(?p) \/ succeeds odd(?p) by lemma(nat:even:disj:odd),
+  cases(succeeds even(?p),
+   [],
+   succeeds odd(?p),
+   [succeeds nat(?p) & succeeds odd(?p) => succeeds odd(square(?p)) by lemma(odd:square:odd),
+    succeeds nat(?p) & succeeds odd(?p),
+    succeeds odd(square(?p)),
+    succeeds odd(square(?p)) => fails even(square(?p)) by lemma(odd:negation:even),
+    fails even(square(?p)),
+    ff],
+   succeeds even(?p))],
+ succeeds even(?p))
+).
+
+/*
+L'idée de la preuve :
+
+On suppose succeeds nat(?p) & succeeds even(square(?p))
+Par le lemme nat:even:disj:odd, on sait que ?p est pair ou impair
+On fait une analyse de cas :
+
+Si ?p est pair : c'est exactement la conclusion, donc l'implication est vraie
+Si ?p est impair :
+
+Par odd:square:odd, square(?p) est impair
+Par odd:negation:even, si square(?p) est impair alors even(square(?p)) échoue
+Mais on a supposé succeeds even(square(?p)), contradiction (ff)
+
+
+
+
+Dans tous les cas, on conclut succeeds even(?p)
+*/
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+:- theorem(sqrt2:irrational,
+all [p,q]: succeeds nat(?p) & succeeds nat(?q) & coprime(?p,?q) 
+    => ~ (square(?p) = s(s(0)) @* square(?q)),
+assume(succeeds nat(?p) & succeeds nat(?q) & coprime(?p,?q),
+[
+ contra(square(?p) = s(s(0)) @* square(?q),
+  [
+   % p^2 is even
+   succeeds nat(square(?q)) by lemma(nat:natsquare),
+   s(s(0)) @* square(?q) = square(?p),
+   succeeds even(square(?p)) by lemma(twotimes:even),
+   % p is even
+   succeeds even(?p) by lemma(evenpp:evenp),
+   % there exists r st. 
+   ex r: succeeds nat(?r) & ?p = s(s(0)) @* ?r by lemma(even:twotimes),
+   exist(r, succeeds nat(?r) & ?p = s(s(0)) @* ?r,
+    [
+     % p^2 = 2^2 * r^2
+     square(?p) = square(s(s(0))) @* square(?r) by lemma(npq:nnppqq),
+     % 4 * r^2 = 2 * q^2
+     square(s(s(0))) = s(s(s(s(0)))) by lemma(sqr2:4),
+     square(?p) = s(s(s(s(0)))) @* square(?r),
+     s(s(s(s(0)))) @* square(?r) = s(s(0)) @* square(?q), 
+     % 2 * r^2 = q^2
+     % s(s(0)) @* square(?r) = square(?q) by lemma(simplify:by2),
+     succeeds nat(square(?r)) by lemma(nat:natsquare),
+     succeeds nat(square(?q)) by lemma(nat:natsquare),
+     succeeds nat(square(?r)) & succeeds nat(square(?q)) & 
+     s(s(s(s(0)))) @* square(?r) = s(s(0)) @* square(?q) => 
+        s(s(0)) @* square(?r) = square(?q) by lemma(simplify:by2),
+     s(s(0)) @* square(?r) = square(?q),
+     % q is even
+     succeeds nat(square(?r)) by lemma(nat:natsquare),
+     succeeds even(square(?q)) by lemma(twotimes:even),
+     succeeds even(?q) by lemma(evenpp:evenp)
+    ],
+   succeeds even(?q)),
+   % contradiction
+   divisor(s(s(0)),?q) by lemma(even:div2),
+   divisor(s(s(0)),?p) by lemma(even:div2),
+   succeeds nat(s(s(0))),
+   coprime(?p,?q),
+   (all r: succeeds nat(?r) & divisor(?r,?p) & divisor(?r,?q) => ?r = s(0)) 
+                 by elimination(coprime,2),
+   succeeds nat(s(s(0))) & divisor(s(s(0)),?p) & divisor(s(s(0)),?q) => s(s(0)) = s(0),
+   s(s(0)) = s(0),
+   ff
+ ]),
+ ~ (square(?p) = s(s(0)) @* square(?q))
+],
+~ (square(?p) = s(s(0)) @* square(?q)))).
+
+:- bye.

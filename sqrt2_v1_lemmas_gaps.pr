@@ -1,0 +1,120 @@
+:- initialize.
+
+:- needs_gr(nat).
+:- needs_thm(nat).
+
+:- needs_gr(gcd).
+:- needs_thm(gcd).
+
+:- compile_gr(sqrt2).
+:- needs_gr(sqrt2).
+:- tex_file(sqrt2_v1_lemmas_gaps).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+:- definition_pred(coprime,2,
+all [p,q]: coprime(?p,?q) 
+<=> (all r: succeeds nat(?r) & divisor(?r,?p) & divisor(?r,?q) => ?r = s(0))).
+
+:- lemma(square:existence,
+all n: succeeds nat(?n) => (ex p: succeeds times(?n,?n,?p)),
+assume(succeeds nat(?n),
+ [succeeds nat(?n) & succeeds nat(?n),
+  ex z: succeeds times(?n,?n,?z) by lemma(times:existence)],
+ ex p: succeeds times(?n,?n,?p))
+).
+
+:- lemma(square:uniqueness,
+all [n,sn,sp]: succeeds times(?n,?n,?sn) & succeeds times(?n,?n,?sp) => ?sn = ?sp,
+assume(succeeds times(?n,?n,?sn) & succeeds times(?n,?n,?sp),
+ [?sn = ?sp by lemma(times:uniqueness)],
+ ?sn = ?sp)
+).
+
+:- definition_fun(square,1,
+all [n,p]: succeeds nat(?n) => (square(?n) = ?p <=> succeeds times(?n,?n,?p)),
+existence by lemma(square:existence),
+uniqueness by lemma(square:uniqueness)).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+:- lemma(nat:natsquare,
+all n: succeeds nat(?n) => succeeds nat(square(?n)),
+ff by gap).
+
+:- lemma(twotimes:even,
+all [n,p]: succeeds nat(?p) & s(s(0)) @* ?p = ?n => succeeds even(?n),
+ff by gap).
+
+:- lemma(evenpp:evenp,
+all p: succeeds even(square(?p)) => succeeds even(?p),
+ff by gap).
+
+:- lemma(even:twotimes,
+all n: succeeds even(?n) => (ex p: succeeds nat(?p) & ?n = s(s(0)) @* ?p),
+ff by gap).
+
+:- lemma(npq:nnppqq,
+all [n,p,q]: ?n = ?p @* ?q => square(?n) = square(?p) @* square(?q),
+ff by gap).
+
+:- lemma(sqr2:4, square(s(s(0))) = s(s(s(s(0)))), ff by gap).
+
+:- lemma(simplify:by2,
+ all [n,p]: s(s(s(s(0)))) @* ?n = s(s(0)) @* ?p => s(s(0)) @* ?n = ?p,
+ff by gap).
+
+:- lemma(even:div2,
+all n: succeeds even(?n) => divisor(s(s(0)),?n),
+ff by gap).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+:- theorem(sqrt2:irrational,
+all [p,q]: succeeds nat(?p) & succeeds nat(?q) & coprime(?p,?q) 
+    => ~ (square(?p) = s(s(0)) @* square(?q)),
+assume(succeeds nat(?p) & succeeds nat(?q) & coprime(?p,?q),
+[
+ contra(square(?p) = s(s(0)) @* square(?q),
+  [
+   % p^2 is even
+   succeeds nat(square(?q)) by lemma(nat:natsquare),
+   s(s(0)) @* square(?q) = square(?p),
+   succeeds even(square(?p)) by lemma(twotimes:even),
+   % p is even
+   succeeds even(?p) by lemma(evenpp:evenp),
+   % there exists r st. 
+   ex r: succeeds nat(?r) & ?p = s(s(0)) @* ?r by lemma(even:twotimes),
+   exist(r, succeeds nat(?r) & ?p = s(s(0)) @* ?r,
+    [
+     % p^2 = 2^2 * r^2
+     square(?p) = square(s(s(0))) @* square(?r) by lemma(npq:nnppqq),
+     % 4 * r^2 = 2 * q^2
+     square(s(s(0))) = s(s(s(s(0)))) by lemma(sqr2:4),
+     square(?p) = s(s(s(s(0)))) @* square(?r),
+     s(s(s(s(0)))) @* square(?r) = s(s(0)) @* square(?q), 
+     % 2 * r^2 = q^2
+     s(s(0)) @* square(?r) = square(?q) by lemma(simplify:by2),
+     % q is even
+     succeeds nat(square(?r)) by lemma(nat:natsquare),
+     succeeds even(square(?q)) by lemma(twotimes:even),
+     succeeds even(?q) by lemma(evenpp:evenp)
+    ],
+   succeeds even(?q)),
+   % contradiction
+   divisor(s(s(0)),?q) by lemma(even:div2),
+   divisor(s(s(0)),?p) by lemma(even:div2),
+   succeeds nat(s(s(0))),
+   coprime(?p,?q),
+   (all r: succeeds nat(?r) & divisor(?r,?p) & divisor(?r,?q) => ?r = s(0)) 
+                 by elimination(coprime,2),
+   succeeds nat(s(s(0))) & divisor(s(s(0)),?p) & divisor(s(s(0)),?q) => s(s(0)) = s(0),
+   s(s(0)) = s(0),
+   ff
+ ]),
+ ~ (square(?p) = s(s(0)) @* square(?q))
+],
+~ (square(?p) = s(s(0)) @* square(?q)))).
+
+
+:- bye.

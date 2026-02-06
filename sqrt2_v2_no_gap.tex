@@ -1,0 +1,527 @@
+\input proofmacros.tex
+!title{sqrt2_v2_no_gap}
+
+!definition{coprime/2}{!0!1!all[p,q]!,!1(!It{coprime}(p,q)!eqv !1!all[r]!,!1(!1!1!S !Tt{nat}(r)!2!land !It{divisor}(r,p)!land !It{divisor}(r,q)!2!to r !eq !Tt{s}(!Tt{0}))!2!2)!2!2}
+
+!lemma{square:existence}{!0!1!all[n]!,!1(!1!S !Tt{nat}(n)!2!to !1!ex[p]!,!1!S !Tt{times}(n,n,p)!2!2)!2!2}
+!Pr{
+!Ass{!0!1!S !Tt{nat}(n)!2}
+$!0!1!1!S !Tt{nat}(n)!2!land !1!S !Tt{nat}(n)!2!2$.
+$!0!1!ex[z]!,!1!S !Tt{times}(n,n,z)!2!2$!by{Lemma}{times:existence}.
+!Eass{!0!1!1!S !Tt{nat}(n)!2!to !1!ex[p]!,!1!S !Tt{times}(n,n,p)!2!2!2}}
+!Epr
+
+!lemma{square:uniqueness}{!0!1!all[n,sn,sp]!,!1(!1!1!S !Tt{times}(n,n,sn)!2!land !1!S !Tt{times}(n,n,sp)!2!2!to sn !eq sp)!2!2}
+!Pr{
+!Ass{!0!1!1!S !Tt{times}(n,n,sn)!2!land !1!S !Tt{times}(n,n,sp)!2!2}
+$!0sn !eq sp$!by{Lemma}{times:uniqueness}.
+!Eass{!0!1!1!1!S !Tt{times}(n,n,sn)!2!land !1!S !Tt{times}(n,n,sp)!2!2!to sn !eq sp!2}}
+!Epr
+
+!definition{square/1}{!0!1!all[n,p]!,!1(!1!S !Tt{nat}(n)!2!to !1(!It{square}(n) !eq p!eqv !1!S !Tt{times}(n,n,p)!2)!2)!2!2}
+
+!lemma{nat:natsquare}{!0!1!all[n]!,!1(!1!S !Tt{nat}(n)!2!to !1!S !Tt{nat}(!It{square}(n))!2)!2!2}
+!Pr{
+!Ass{!0!1!S !Tt{nat}(n)!2}
+$!0!1!S !Tt{times}(n,n,!It{square}(n))!2$!by{Definition}{square/1}.
+$!0!1!1!1!S !Tt{times}(n,n,!It{square}(n))!2!land !1!S !Tt{nat}(n)!2!2!to !1!S !Tt{nat}(!It{square}(n))!2!2$!by{Lemma}{times:types:2}.
+$!0!1!S !Tt{nat}(!It{square}(n))!2$.
+!Eass{!0!1!1!S !Tt{nat}(n)!2!to !1!S !Tt{nat}(!It{square}(n))!2!2}}
+!Epr
+
+!lemma{sqr2:4}{!0!It{square}(!Tt{s}(!Tt{s}(!Tt{0}))) !eq !Tt{s}(!Tt{s}(!Tt{s}(!Tt{s}(!Tt{0}))))}
+!Pr{
+$!0!1!S !Tt{nat}(!Tt{0})!2$.
+$!0!1!S !Tt{nat}(!Tt{s}(!Tt{0}))!2$.
+$!0!1!S !Tt{nat}(!Tt{s}(!Tt{s}(!Tt{0})))!2$.
+$!0!1!S !Tt{times}(!Tt{0},!Tt{s}(!Tt{s}(!Tt{0})),!Tt{0})!2$.
+$!0!1!S !Tt{plus}(!Tt{s}(!Tt{s}(!Tt{0})),!Tt{0},!Tt{s}(!Tt{s}(!Tt{0})))!2$.
+$!0!1!S !Tt{times}(!Tt{s}(!Tt{0}),!Tt{s}(!Tt{s}(!Tt{0})),!Tt{s}(!Tt{s}(!Tt{0})))!2$.
+$!0!1!S !Tt{plus}(!Tt{s}(!Tt{0}),!Tt{s}(!Tt{s}(!Tt{0})),!Tt{s}(!Tt{s}(!Tt{s}(!Tt{0}))))!2$.
+$!0!1!S !Tt{plus}(!Tt{s}(!Tt{s}(!Tt{0})),!Tt{s}(!Tt{s}(!Tt{0})),!Tt{s}(!Tt{s}(!Tt{s}(!Tt{s}(!Tt{0})))))!2$.
+$!0!1!S !Tt{times}(!Tt{s}(!Tt{s}(!Tt{0})),!Tt{s}(!Tt{s}(!Tt{0})),!Tt{s}(!Tt{s}(!Tt{s}(!Tt{s}(!Tt{0})))))!2$.
+$!0!It{square}(!Tt{s}(!Tt{s}(!Tt{0}))) !eq !Tt{s}(!Tt{s}(!Tt{s}(!Tt{s}(!Tt{0}))))$!by{Definition}{square/1}.}
+!Epr
+
+!lemma{twotimes:even}{!0!1!all[n,p]!,!1(!1!1!S !Tt{nat}(p)!2!land !Tt{s}(!Tt{s}(!Tt{0}))*p !eq n!2!to !1!S !Tt{even}(n)!2)!2!2}
+!Pr{
+!Ind{$!0!1!all[p]!,!1(!1!S !Tt{nat}(p)!2!to !1!all[n]!,!1(!Tt{s}(!Tt{s}(!Tt{0}))*p !eq n!to !1!S !Tt{even}(n)!2)!2!2)!2!2$}
+!Stp{none}
+!Ass{!0!Tt{s}(!Tt{s}(!Tt{0}))*!Tt{0} !eq n}
+$!0!1!S !Tt{nat}(!Tt{s}(!Tt{s}(!Tt{0})))!2$.
+$!0!Tt{s}(!Tt{s}(!Tt{0}))*!Tt{0} !eq !Tt{0}$!by{Lemma}{times:zero}.
+$!0n !eq !Tt{0}$.
+$!0!1!S !Tt{even}(!Tt{0})!2$.
+!Eass{!0!1!Tt{s}(!Tt{s}(!Tt{0}))*!Tt{0} !eq n!to !1!S !Tt{even}(n)!2!2}
+!Estp{!0!1!all[n]!,!1(!Tt{s}(!Tt{s}(!Tt{0}))*!Tt{0} !eq n!to !1!S !Tt{even}(n)!2)!2!2}
+!Stp{$!0!1!all[n]!,!1(!Tt{s}(!Tt{s}(!Tt{0}))*p !eq n!to !1!S !Tt{even}(n)!2)!2!2$ and $!0!1!S !Tt{nat}(p)!2$}
+!Ass{!0!Tt{s}(!Tt{s}(!Tt{0}))*!Tt{s}(p) !eq n}
+$!0!1!S !Tt{nat}(!Tt{s}(!Tt{0}))!2$.
+$!0!1!S !Tt{nat}(!Tt{s}(!Tt{s}(!Tt{0})))!2$.
+$!0!1!S !Tt{nat}(!Tt{s}(p))!2$.
+$!0!Tt{s}(!Tt{s}(!Tt{0}))*!Tt{s}(p) !eq !Tt{s}(p)+!Tt{s}(!Tt{0})*!Tt{s}(p)$!by{Corollary}{times:successor}.
+$!0!Tt{s}(!Tt{0})*!Tt{s}(p) !eq !Tt{s}(p)$!by{Lemma}{times:one}.
+$!0!Tt{s}(!Tt{s}(!Tt{0}))*!Tt{s}(p) !eq !Tt{s}(p)+!Tt{s}(p)$.
+$!0!Tt{s}(p)+!Tt{s}(p) !eq !Tt{s}(p+!Tt{s}(p))$!by{Corollary}{plus:successor}.
+$!0p+!Tt{s}(p) !eq !Tt{s}(p)+p$!by{Theorem}{plus:commutative}.
+$!0!Tt{s}(p)+p !eq !Tt{s}(p+p)$!by{Corollary}{plus:successor}.
+$!0p+!Tt{s}(p) !eq !Tt{s}(p+p)$.
+$!0!Tt{s}(p)+!Tt{s}(p) !eq !Tt{s}(!Tt{s}(p+p))$.
+$!0!1!S !Tt{nat}(p+p)!2$!by{Corollary}{plus:types}.
+$!0!Tt{s}(!Tt{s}(!Tt{0}))*p !eq p+!Tt{s}(!Tt{0})*p$!by{Corollary}{times:successor}.
+$!0!Tt{s}(!Tt{0})*p !eq p$!by{Lemma}{times:one}.
+$!0!Tt{s}(!Tt{s}(!Tt{0}))*p !eq p+p$.
+$!0!1!Tt{s}(!Tt{s}(!Tt{0}))*p !eq p+p!to !1!S !Tt{even}(p+p)!2!2$.
+$!0!1!S !Tt{even}(p+p)!2$.
+$!0!Tt{s}(!Tt{s}(!Tt{0}))*!Tt{s}(p) !eq !Tt{s}(!Tt{s}(p+p))$.
+$!0n !eq !Tt{s}(!Tt{s}(p+p))$.
+$!0!1!S !Tt{even}(!Tt{s}(!Tt{s}(p+p)))!2$.
+$!0!1!S !Tt{even}(n)!2$.
+!Eass{!0!1!Tt{s}(!Tt{s}(!Tt{0}))*!Tt{s}(p) !eq n!to !1!S !Tt{even}(n)!2!2}
+!Estp{!0!1!all[n]!,!1(!Tt{s}(!Tt{s}(!Tt{0}))*!Tt{s}(p) !eq n!to !1!S !Tt{even}(n)!2)!2!2}
+!Eind}
+!Epr
+
+!lemma{even:twotimes}{!0!1!all[n]!,!1(!1!S !Tt{even}(n)!2!to !1!ex[p]!,!1(!1!S !Tt{nat}(p)!2!land n !eq !Tt{s}(!Tt{s}(!Tt{0}))*p)!2!2)!2!2}
+!Pr{
+!Ind{$!0!1!all[n]!,!1(!1!S !Tt{even}(n)!2!to !1!ex[p]!,!1(!1!S !Tt{nat}(p)!2!land n !eq !Tt{s}(!Tt{s}(!Tt{0}))*p)!2!2)!2!2$}
+!Stp{none}
+$!0!1!S !Tt{nat}(!Tt{s}(!Tt{s}(!Tt{0})))!2$.
+$!0!Tt{s}(!Tt{s}(!Tt{0}))*!Tt{0} !eq !Tt{0}$!by{Lemma}{times:zero}.
+$!0!1!1!S !Tt{nat}(!Tt{0})!2!land !Tt{0} !eq !Tt{s}(!Tt{s}(!Tt{0}))*!Tt{0}!2$.
+$!0!1!ex[p]!,!1(!1!S !Tt{nat}(p)!2!land !Tt{0} !eq !Tt{s}(!Tt{s}(!Tt{0}))*p)!2!2$.
+!Estp{!0!1!ex[p]!,!1(!1!S !Tt{nat}(p)!2!land !Tt{0} !eq !Tt{s}(!Tt{s}(!Tt{0}))*p)!2!2}
+!Stp{$!0!1!ex[p]!,!1(!1!S !Tt{nat}(p)!2!land n !eq !Tt{s}(!Tt{s}(!Tt{0}))*p)!2!2$ and $!0!1!S !Tt{even}(n)!2$}
+!Ex[p]{!0!1!1!S !Tt{nat}(p)!2!land n !eq !Tt{s}(!Tt{s}(!Tt{0}))*p!2}
+$!0!1!S !Tt{nat}(!Tt{s}(!Tt{0}))!2$.
+$!0!1!S !Tt{nat}(!Tt{s}(!Tt{s}(!Tt{0})))!2$.
+$!0!1!S !Tt{nat}(!Tt{s}(p))!2$.
+$!0!Tt{s}(!Tt{s}(!Tt{0}))*!Tt{s}(p) !eq !Tt{s}(p)+!Tt{s}(!Tt{0})*!Tt{s}(p)$!by{Corollary}{times:successor}.
+$!0!Tt{s}(!Tt{0})*!Tt{s}(p) !eq !Tt{s}(p)$!by{Lemma}{times:one}.
+$!0!Tt{s}(!Tt{s}(!Tt{0}))*!Tt{s}(p) !eq !Tt{s}(p)+!Tt{s}(p)$.
+$!0!Tt{s}(p)+!Tt{s}(p) !eq !Tt{s}(p+!Tt{s}(p))$!by{Corollary}{plus:successor}.
+$!0p+!Tt{s}(p) !eq !Tt{s}(p)+p$!by{Theorem}{plus:commutative}.
+$!0!Tt{s}(p)+p !eq !Tt{s}(p+p)$!by{Corollary}{plus:successor}.
+$!0p+!Tt{s}(p) !eq !Tt{s}(p+p)$.
+$!0!Tt{s}(p)+!Tt{s}(p) !eq !Tt{s}(!Tt{s}(p+p))$.
+$!0!1!S !Tt{nat}(p+p)!2$!by{Corollary}{plus:types}.
+$!0!Tt{s}(!Tt{s}(!Tt{0}))*p !eq p+!Tt{s}(!Tt{0})*p$!by{Corollary}{times:successor}.
+$!0!Tt{s}(!Tt{0})*p !eq p$!by{Lemma}{times:one}.
+$!0!Tt{s}(!Tt{s}(!Tt{0}))*p !eq p+p$.
+$!0!Tt{s}(!Tt{s}(n)) !eq !Tt{s}(!Tt{s}(!Tt{s}(!Tt{s}(!Tt{0}))*p)) !eq !Tt{s}(!Tt{s}(p+p)) !eq !Tt{s}(p)+!Tt{s}(p) !eq !Tt{s}(!Tt{s}(!Tt{0}))*!Tt{s}(p)$.
+$!0!1!1!S !Tt{nat}(!Tt{s}(p))!2!land !Tt{s}(!Tt{s}(n)) !eq !Tt{s}(!Tt{s}(!Tt{0}))*!Tt{s}(p)!2$.
+$!0!1!ex[p]!,!1(!1!S !Tt{nat}(p)!2!land !Tt{s}(!Tt{s}(n)) !eq !Tt{s}(!Tt{s}(!Tt{0}))*p)!2!2$.
+!Eex{!0!1!ex[p]!,!1(!1!S !Tt{nat}(p)!2!land !Tt{s}(!Tt{s}(n)) !eq !Tt{s}(!Tt{s}(!Tt{0}))*p)!2!2}
+!Estp{!0!1!ex[p]!,!1(!1!S !Tt{nat}(p)!2!land !Tt{s}(!Tt{s}(n)) !eq !Tt{s}(!Tt{s}(!Tt{0}))*p)!2!2}
+!Eind}
+!Epr
+
+!lemma{times:injective:second}{!0!1!all[x,y,z]!,!1(!1!1!S !Tt{nat}(x)!2!land !1!S !Tt{nat}(y)!2!land !1!S !Tt{nat}(z)!2!land !Tt{s}(x)*y !eq !Tt{s}(x)*z!2!to y !eq z)!2!2}
+!Pr{
+!Ass{!0!1!1!S !Tt{nat}(x)!2!land !1!S !Tt{nat}(y)!2!land !1!S !Tt{nat}(z)!2!land !Tt{s}(x)*y !eq !Tt{s}(x)*z!2}
+$!0!1!S !Tt{nat}(!Tt{s}(x))!2$.
+$!0!1!S !Tt{nat}(!Tt{s}(x)*y)!2$!by{Corollary}{times:types}.
+$!0!1!S !Tt{nat}(!Tt{s}(x)*z)!2$!by{Corollary}{times:types}.
+$!0!1!S !Tt{s}(x)*z !leq !Tt{s}(x)*z!2$!by{Theorem}{leq:reflexive}.
+$!0!1!S !Tt{s}(x)*y !leq !Tt{s}(x)*z!2$.
+$!0!1!S y !leq z!2$!by{Lemma}{leq:times:inverse}.
+$!0!1!S !Tt{s}(x)*y !leq !Tt{s}(x)*y!2$!by{Theorem}{leq:reflexive}.
+$!0!1!S !Tt{s}(x)*z !leq !Tt{s}(x)*y!2$.
+$!0!1!S z !leq y!2$!by{Lemma}{leq:times:inverse}.
+$!0y !eq z$!by{Theorem}{leq:antisymmetric}.
+!Eass{!0!1!1!1!S !Tt{nat}(x)!2!land !1!S !Tt{nat}(y)!2!land !1!S !Tt{nat}(z)!2!land !Tt{s}(x)*y !eq !Tt{s}(x)*z!2!to y !eq z!2}}
+!Epr
+
+!lemma{simplify:by2}{!0!1!all[n,p]!,!1(!1!1!S !Tt{nat}(n)!2!land !1!S !Tt{nat}(p)!2!land !Tt{s}(!Tt{s}(!Tt{s}(!Tt{s}(!Tt{0}))))*n !eq !Tt{s}(!Tt{s}(!Tt{0}))*p!2!to !Tt{s}(!Tt{s}(!Tt{0}))*n !eq p)!2!2}
+!Pr{
+!Ass{!0!1!1!S !Tt{nat}(n)!2!land !1!S !Tt{nat}(p)!2!land !Tt{s}(!Tt{s}(!Tt{s}(!Tt{s}(!Tt{0}))))*n !eq !Tt{s}(!Tt{s}(!Tt{0}))*p!2}
+$!0!1!S !Tt{nat}(!Tt{0})!2$.
+$!0!1!S !Tt{nat}(!Tt{s}(!Tt{0}))!2$.
+$!0!1!S !Tt{nat}(!Tt{s}(!Tt{s}(!Tt{0})))!2$.
+$!0!Tt{0}+!Tt{s}(!Tt{s}(!Tt{0})) !eq !Tt{s}(!Tt{s}(!Tt{0}))$!by{Corollary}{plus:zero}.
+$!0!Tt{s}(!Tt{0})+!Tt{s}(!Tt{s}(!Tt{0})) !eq !Tt{s}(!Tt{0}+!Tt{s}(!Tt{s}(!Tt{0})))$!by{Corollary}{plus:successor}.
+$!0!Tt{s}(!Tt{0})+!Tt{s}(!Tt{s}(!Tt{0})) !eq !Tt{s}(!Tt{s}(!Tt{s}(!Tt{0})))$.
+$!0!Tt{s}(!Tt{s}(!Tt{0}))+!Tt{s}(!Tt{s}(!Tt{0})) !eq !Tt{s}(!Tt{s}(!Tt{0})+!Tt{s}(!Tt{s}(!Tt{0})))$!by{Corollary}{plus:successor}.
+$!0!Tt{s}(!Tt{s}(!Tt{0}))+!Tt{s}(!Tt{s}(!Tt{0})) !eq !Tt{s}(!Tt{s}(!Tt{s}(!Tt{s}(!Tt{0}))))$.
+$!0!Tt{s}(!Tt{s}(!Tt{0}))*!Tt{s}(!Tt{s}(!Tt{0})) !eq !Tt{s}(!Tt{s}(!Tt{0}))+!Tt{s}(!Tt{0})*!Tt{s}(!Tt{s}(!Tt{0}))$!by{Corollary}{times:successor}.
+$!0!Tt{s}(!Tt{0})*!Tt{s}(!Tt{s}(!Tt{0})) !eq !Tt{s}(!Tt{s}(!Tt{0}))$!by{Lemma}{times:one}.
+$!0!Tt{s}(!Tt{s}(!Tt{0}))*!Tt{s}(!Tt{s}(!Tt{0})) !eq !Tt{s}(!Tt{s}(!Tt{0}))+!Tt{s}(!Tt{s}(!Tt{0}))$.
+$!0!Tt{s}(!Tt{s}(!Tt{0}))*!Tt{s}(!Tt{s}(!Tt{0})) !eq !Tt{s}(!Tt{s}(!Tt{s}(!Tt{s}(!Tt{0}))))$.
+$!0!1!S !Tt{nat}(!Tt{s}(!Tt{s}(!Tt{0}))*n)!2$!by{Corollary}{times:types}.
+$!0!Tt{s}(!Tt{s}(!Tt{0}))*!Tt{s}(!Tt{s}(!Tt{0}))*n !eq !Tt{s}(!Tt{s}(!Tt{0}))*(!Tt{s}(!Tt{s}(!Tt{0}))*n)$!by{Theorem}{times:associative}.
+$!0!Tt{s}(!Tt{s}(!Tt{s}(!Tt{s}(!Tt{0}))))*n !eq !Tt{s}(!Tt{s}(!Tt{0}))*(!Tt{s}(!Tt{s}(!Tt{0}))*n)$.
+$!0!Tt{s}(!Tt{s}(!Tt{0}))*(!Tt{s}(!Tt{s}(!Tt{0}))*n) !eq !Tt{s}(!Tt{s}(!Tt{0}))*p$.
+$!0!Tt{s}(!Tt{s}(!Tt{0}))*n !eq p$!by{Lemma}{times:injective:second}.
+!Eass{!0!1!1!1!S !Tt{nat}(n)!2!land !1!S !Tt{nat}(p)!2!land !Tt{s}(!Tt{s}(!Tt{s}(!Tt{s}(!Tt{0}))))*n !eq !Tt{s}(!Tt{s}(!Tt{0}))*p!2!to !Tt{s}(!Tt{s}(!Tt{0}))*n !eq p!2}}
+!Epr
+
+!lemma{even:div2}{!0!1!all[n]!,!1(!1!S !Tt{even}(n)!2!to !It{divisor}(!Tt{s}(!Tt{s}(!Tt{0})),n))!2!2}
+!Pr{
+!Ass{!0!1!S !Tt{even}(n)!2}
+$!0!1!ex[p]!,!1(!1!S !Tt{nat}(p)!2!land n !eq !Tt{s}(!Tt{s}(!Tt{0}))*p)!2!2$!by{Lemma}{even:twotimes}.
+!Ex[p]{!0!1!1!S !Tt{nat}(p)!2!land n !eq !Tt{s}(!Tt{s}(!Tt{0}))*p!2}
+$!0!Tt{s}(!Tt{s}(!Tt{0}))*p !eq n$.
+$!0!1!ex[z]!,!1(!1!S !Tt{nat}(z)!2!land !Tt{s}(!Tt{s}(!Tt{0}))*z !eq n)!2!2$.
+$!0!It{divisor}(!Tt{s}(!Tt{s}(!Tt{0})),n)$!by{Definition}{divisor/2}.
+!Eex{!0!It{divisor}(!Tt{s}(!Tt{s}(!Tt{0})),n)}
+!Eass{!0!1!1!S !Tt{even}(n)!2!to !It{divisor}(!Tt{s}(!Tt{s}(!Tt{0})),n)!2}}
+!Epr
+
+!lemma{npq:nnppqq}{!0!1!all[n,p,q]!,!1(!1!1!S !Tt{nat}(p)!2!land !1!S !Tt{nat}(q)!2!land n !eq p*q!2!to !It{square}(n) !eq !It{square}(p)*!It{square}(q))!2!2}
+!Pr{
+!Ass{!0!1!1!S !Tt{nat}(p)!2!land !1!S !Tt{nat}(q)!2!land n !eq p*q!2}
+$!0!1!S !Tt{nat}(p*q)!2$!by{Corollary}{times:types}.
+$!0!1!S !Tt{nat}(n)!2$.
+$!0!1!S !Tt{nat}(!It{square}(p))!2$!by{Lemma}{nat:natsquare}.
+$!0!1!S !Tt{nat}(!It{square}(q))!2$!by{Lemma}{nat:natsquare}.
+$!0!1!S !Tt{times}(p,p,!It{square}(p))!2$!by{Definition}{square/1}.
+$!0p*p !eq !It{square}(p)$!by{Definition}{@*/2}.
+$!0!1!S !Tt{times}(q,q,!It{square}(q))!2$!by{Definition}{square/1}.
+$!0q*q !eq !It{square}(q)$!by{Definition}{@*/2}.
+$!0!1!S !Tt{times}(n,n,!It{square}(n))!2$!by{Definition}{square/1}.
+$!0n*n !eq !It{square}(n)$!by{Definition}{@*/2}.
+$!0!1!S !Tt{nat}(q*p)!2$!by{Corollary}{times:types}.
+$!0!1!S !Tt{nat}(p*q)!2$!by{Corollary}{times:types}.
+$!0!1!S !Tt{nat}(q*q)!2$!by{Corollary}{times:types}.
+$!0!1!S !Tt{nat}(p*p)!2$!by{Corollary}{times:types}.
+$!0!1!S !Tt{nat}(p*q*q)!2$!by{Corollary}{times:types}.
+$!0!1!S !Tt{nat}(p*(q*q))!2$!by{Corollary}{times:types}.
+$!0p*q*(p*q) !eq p*(q*(p*q))$!by{Theorem}{times:associative}.
+$!0q*p*q !eq q*(p*q)$!by{Theorem}{times:associative}.
+$!0q*p !eq p*q$!by{Theorem}{times:commutative}.
+$!0p*q*q !eq q*p*q$.
+$!0q*p*q !eq q*(p*q)$.
+$!0p*q*q !eq q*(p*q)$.
+$!0p*(q*(p*q)) !eq p*(p*q*q)$.
+$!0p*q*q !eq p*(q*q)$!by{Theorem}{times:associative}.
+$!0p*(p*q*q) !eq p*(p*(q*q))$.
+$!0p*p*(q*q) !eq p*(p*(q*q))$!by{Theorem}{times:associative}.
+$!0p*(p*(q*q)) !eq p*p*(q*q)$.
+$!0p*q*(p*q) !eq p*(p*q*q)$.
+$!0p*(p*q*q) !eq p*p*(q*q)$.
+$!0p*q*(p*q) !eq p*p*(q*q)$.
+$!0!It{square}(p)*!It{square}(q) !eq p*p*(q*q)$.
+$!0n*n !eq p*q*(p*q)$.
+$!0n*n !eq p*p*(q*q)$.
+$!0n*n !eq !It{square}(p)*!It{square}(q)$.
+$!0!It{square}(n) !eq !It{square}(p)*!It{square}(q)$.
+!Eass{!0!1!1!1!S !Tt{nat}(p)!2!land !1!S !Tt{nat}(q)!2!land n !eq p*q!2!to !It{square}(n) !eq !It{square}(p)*!It{square}(q)!2}}
+!Epr
+
+!lemma{even:succ:odd}{!0!1!all[p]!,!1(!1!S !Tt{even}(p)!2!to !1!S !Tt{odd}(!Tt{s}(p))!2)!2!2}
+!Pr{
+!Ind{$!0!1!all[p]!,!1(!1!S !Tt{even}(p)!2!to !1!S !Tt{odd}(!Tt{s}(p))!2)!2!2$}
+!Stp{none}
+$!0!1!S !Tt{odd}(!Tt{s}(!Tt{0}))!2$.
+!Estp{!0!1!S !Tt{odd}(!Tt{s}(!Tt{0}))!2}
+!Stp{$!0!1!S !Tt{odd}(!Tt{s}(p))!2$ and $!0!1!S !Tt{even}(p)!2$}
+$!0!1!S !Tt{odd}(!Tt{s}(!Tt{s}(!Tt{s}(p))))!2$.
+!Estp{!0!1!S !Tt{odd}(!Tt{s}(!Tt{s}(!Tt{s}(p))))!2}
+!Eind}
+!Epr
+
+!lemma{odd:succ:even}{!0!1!all[p]!,!1(!1!S !Tt{odd}(p)!2!to !1!S !Tt{even}(!Tt{s}(p))!2)!2!2}
+!Pr{
+!Ind{$!0!1!all[p]!,!1(!1!S !Tt{odd}(p)!2!to !1!S !Tt{even}(!Tt{s}(p))!2)!2!2$}
+!Stp{none}
+$!0!1!S !Tt{even}(!Tt{s}(!Tt{s}(!Tt{0})))!2$.
+!Estp{!0!1!S !Tt{even}(!Tt{s}(!Tt{s}(!Tt{0})))!2}
+!Stp{$!0!1!S !Tt{even}(!Tt{s}(p))!2$ and $!0!1!S !Tt{odd}(p)!2$}
+$!0!1!S !Tt{even}(!Tt{s}(!Tt{s}(!Tt{s}(p))))!2$.
+!Estp{!0!1!S !Tt{even}(!Tt{s}(!Tt{s}(!Tt{s}(p))))!2}
+!Eind}
+!Epr
+
+!lemma{nat:even:disj:odd}{!0!1!all[p]!,!1(!1!S !Tt{nat}(p)!2!to !1!1!S !Tt{even}(p)!2!lor !1!S !Tt{odd}(p)!2!2)!2!2}
+!Pr{
+!Ind{$!0!1!all[p]!,!1(!1!S !Tt{nat}(p)!2!to !1!1!S !Tt{even}(p)!2!lor !1!S !Tt{odd}(p)!2!2)!2!2$}
+!Stp{none}
+$!0!1!S !Tt{even}(!Tt{0})!2$.
+!Estp{!0!1!1!S !Tt{even}(!Tt{0})!2!lor !1!S !Tt{odd}(!Tt{0})!2!2}
+!Stp{$!0!1!1!S !Tt{even}(p)!2!lor !1!S !Tt{odd}(p)!2!2$ and $!0!1!S !Tt{nat}(p)!2$}
+!Cas{!0!1!S !Tt{even}(p)!2}
+$!0!1!S !Tt{odd}(!Tt{s}(p))!2$!by{Lemma}{even:succ:odd}.
+$!0!1!1!S !Tt{even}(!Tt{s}(p))!2!lor !1!S !Tt{odd}(!Tt{s}(p))!2!2$.
+!Ecas
+!Cas{!0!1!S !Tt{odd}(p)!2}
+$!0!1!S !Tt{even}(!Tt{s}(p))!2$!by{Lemma}{odd:succ:even}.
+$!0!1!1!S !Tt{even}(!Tt{s}(p))!2!lor !1!S !Tt{odd}(!Tt{s}(p))!2!2$.
+!Ecas
+!Fin{!0!1!1!S !Tt{even}(!Tt{s}(p))!2!lor !1!S !Tt{odd}(!Tt{s}(p))!2!2}
+!Estp{!0!1!1!S !Tt{even}(!Tt{s}(p))!2!lor !1!S !Tt{odd}(!Tt{s}(p))!2!2}
+!Eind}
+!Epr
+
+!lemma{nat:even:termination}{!0!1!all[n]!,!1(!1!S !Tt{nat}(n)!2!to !1!1!T !Tt{even}(n)!2!land !1!T !Tt{even}(!Tt{s}(n))!2!2)!2!2}
+!Pr{
+!Ind{$!0!1!all[n]!,!1(!1!S !Tt{nat}(n)!2!to !1!1!T !Tt{even}(n)!2!land !1!T !Tt{even}(!Tt{s}(n))!2!2)!2!2$}
+!Stp{none}
+$!0!1!T !Tt{even}(!Tt{0})!2$! by~completion.
+$!0!1!T !Tt{even}(!Tt{s}(!Tt{0}))!2$! by~completion.
+!Estp{!0!1!1!T !Tt{even}(!Tt{0})!2!land !1!T !Tt{even}(!Tt{s}(!Tt{0}))!2!2}
+!Stp{$!0!1!1!T !Tt{even}(n)!2!land !1!T !Tt{even}(!Tt{s}(n))!2!2$ and $!0!1!S !Tt{nat}(n)!2$}
+$!0!1!T !Tt{even}(n)!2$.
+$!0!1!T !Tt{even}(!Tt{s}(n))!2$.
+$!0!1!T !Tt{even}(!Tt{s}(!Tt{s}(n)))!2$! by~completion.
+$!0!1!1!T !Tt{even}(!Tt{s}(n))!2!land !1!T !Tt{even}(!Tt{s}(!Tt{s}(n)))!2!2$.
+!Estp{!0!1!1!T !Tt{even}(!Tt{s}(n))!2!land !1!T !Tt{even}(!Tt{s}(!Tt{s}(n)))!2!2}
+!Eind}
+!Epr
+
+!corollary{even:termination}{!0!1!all[n]!,!1(!1!S !Tt{nat}(n)!2!to !1!T !Tt{even}(n)!2)!2!2}
+!Pr{
+!Ass{!0!1!S !Tt{nat}(n)!2}
+$!0!1!1!S !Tt{nat}(n)!2!to !1!1!T !Tt{even}(n)!2!land !1!T !Tt{even}(!Tt{s}(n))!2!2!2$!by{Lemma}{nat:even:termination}.
+$!0!1!1!T !Tt{even}(n)!2!land !1!T !Tt{even}(!Tt{s}(n))!2!2$.
+$!0!1!T !Tt{even}(n)!2$.
+!Eass{!0!1!1!S !Tt{nat}(n)!2!to !1!T !Tt{even}(n)!2!2}}
+!Epr
+
+!lemma{nat:odd:termination}{!0!1!all[n]!,!1(!1!S !Tt{nat}(n)!2!to !1!1!T !Tt{odd}(n)!2!land !1!T !Tt{odd}(!Tt{s}(n))!2!2)!2!2}
+!Pr{
+!Ind{$!0!1!all[n]!,!1(!1!S !Tt{nat}(n)!2!to !1!1!T !Tt{odd}(n)!2!land !1!T !Tt{odd}(!Tt{s}(n))!2!2)!2!2$}
+!Stp{none}
+$!0!1!T !Tt{odd}(!Tt{0})!2$! by~completion.
+$!0!1!T !Tt{odd}(!Tt{s}(!Tt{0}))!2$! by~completion.
+!Estp{!0!1!1!T !Tt{odd}(!Tt{0})!2!land !1!T !Tt{odd}(!Tt{s}(!Tt{0}))!2!2}
+!Stp{$!0!1!1!T !Tt{odd}(n)!2!land !1!T !Tt{odd}(!Tt{s}(n))!2!2$ and $!0!1!S !Tt{nat}(n)!2$}
+$!0!1!T !Tt{odd}(n)!2$.
+$!0!1!T !Tt{odd}(!Tt{s}(n))!2$.
+$!0!1!T !Tt{odd}(!Tt{s}(!Tt{s}(n)))!2$! by~completion.
+$!0!1!1!T !Tt{odd}(!Tt{s}(n))!2!land !1!T !Tt{odd}(!Tt{s}(!Tt{s}(n)))!2!2$.
+!Estp{!0!1!1!T !Tt{odd}(!Tt{s}(n))!2!land !1!T !Tt{odd}(!Tt{s}(!Tt{s}(n)))!2!2}
+!Eind}
+!Epr
+
+!corollary{odd:termination}{!0!1!all[n]!,!1(!1!S !Tt{nat}(n)!2!to !1!T !Tt{odd}(n)!2)!2!2}
+!Pr{
+!Ass{!0!1!S !Tt{nat}(n)!2}
+$!0!1!1!S !Tt{nat}(n)!2!to !1!1!T !Tt{odd}(n)!2!land !1!T !Tt{odd}(!Tt{s}(n))!2!2!2$!by{Lemma}{nat:odd:termination}.
+$!0!1!1!T !Tt{odd}(n)!2!land !1!T !Tt{odd}(!Tt{s}(n))!2!2$.
+$!0!1!T !Tt{odd}(n)!2$.
+!Eass{!0!1!1!S !Tt{nat}(n)!2!to !1!T !Tt{odd}(n)!2!2}}
+!Epr
+
+!lemma{even:negation:odd}{!0!1!all[n]!,!1(!1!S !Tt{even}(n)!2!to !1!F !Tt{odd}(n)!2)!2!2}
+!Pr{
+!Ind{$!0!1!all[n]!,!1(!1!S !Tt{even}(n)!2!to !1!F !Tt{odd}(n)!2)!2!2$}
+!Stp{none}
+$!0!1!F !Tt{odd}(!Tt{0})!2$! by~completion.
+!Estp{!0!1!F !Tt{odd}(!Tt{0})!2}
+!Stp{$!0!1!F !Tt{odd}(n)!2$ and $!0!1!S !Tt{even}(n)!2$}
+$!0!1!F !Tt{odd}(!Tt{s}(!Tt{s}(n)))!2$! by~completion.
+!Estp{!0!1!F !Tt{odd}(!Tt{s}(!Tt{s}(n)))!2}
+!Eind}
+!Epr
+
+!lemma{odd:negation:even}{!0!1!all[n]!,!1(!1!S !Tt{odd}(n)!2!to !1!F !Tt{even}(n)!2)!2!2}
+!Pr{
+!Ind{$!0!1!all[n]!,!1(!1!S !Tt{odd}(n)!2!to !1!F !Tt{even}(n)!2)!2!2$}
+!Stp{none}
+$!0!1!F !Tt{even}(!Tt{s}(!Tt{0}))!2$! by~completion.
+!Estp{!0!1!F !Tt{even}(!Tt{s}(!Tt{0}))!2}
+!Stp{$!0!1!F !Tt{even}(n)!2$ and $!0!1!S !Tt{odd}(n)!2$}
+$!0!1!F !Tt{even}(!Tt{s}(!Tt{s}(n)))!2$! by~completion.
+!Estp{!0!1!F !Tt{even}(!Tt{s}(!Tt{s}(n)))!2}
+!Eind}
+!Epr
+
+!lemma{even:types}{!0!1!all[n]!,!1(!1!S !Tt{even}(n)!2!to !1!S !Tt{nat}(n)!2)!2!2}
+!Pr{
+!Ind{$!0!1!all[n]!,!1(!1!S !Tt{even}(n)!2!to !1!S !Tt{nat}(n)!2)!2!2$}
+!Stp{none}
+$!0!1!S !Tt{nat}(!Tt{0})!2$.
+!Estp{!0!1!S !Tt{nat}(!Tt{0})!2}
+!Stp{$!0!1!S !Tt{nat}(n)!2$ and $!0!1!S !Tt{even}(n)!2$}
+$!0!1!S !Tt{nat}(!Tt{s}(!Tt{s}(n)))!2$.
+!Estp{!0!1!S !Tt{nat}(!Tt{s}(!Tt{s}(n)))!2}
+!Eind}
+!Epr
+
+!lemma{odd:types}{!0!1!all[n]!,!1(!1!S !Tt{odd}(n)!2!to !1!S !Tt{nat}(n)!2)!2!2}
+!Pr{
+!Ind{$!0!1!all[n]!,!1(!1!S !Tt{odd}(n)!2!to !1!S !Tt{nat}(n)!2)!2!2$}
+!Stp{none}
+$!0!1!S !Tt{nat}(!Tt{s}(!Tt{0}))!2$.
+!Estp{!0!1!S !Tt{nat}(!Tt{s}(!Tt{0}))!2}
+!Stp{$!0!1!S !Tt{nat}(n)!2$ and $!0!1!S !Tt{odd}(n)!2$}
+$!0!1!S !Tt{nat}(!Tt{s}(!Tt{s}(n)))!2$.
+!Estp{!0!1!S !Tt{nat}(!Tt{s}(!Tt{s}(n)))!2}
+!Eind}
+!Epr
+
+!lemma{odd:plus:odd}{!0!1!all[m,n]!,!1(!1!1!S !Tt{odd}(m)!2!land !1!S !Tt{odd}(n)!2!2!to !1!S !Tt{even}(m+n)!2)!2!2}
+!Pr{
+!Ind{$!0!1!all[m]!,!1(!1!S !Tt{odd}(m)!2!to !1!all[n]!,!1(!1!S !Tt{odd}(n)!2!to !1!S !Tt{even}(m+n)!2)!2!2)!2!2$}
+!Stp{none}
+!Ass{!0!1!S !Tt{odd}(n)!2}
+$!0!1!1!S !Tt{odd}(n)!2!to !1!S !Tt{nat}(n)!2!2$!by{Lemma}{odd:types}.
+$!0!1!S !Tt{nat}(n)!2$.
+$!0!Tt{s}(!Tt{0})+n !eq !Tt{s}(!Tt{0}+n)$!by{Corollary}{plus:successor}.
+$!0!Tt{0}+n !eq n$!by{Corollary}{plus:zero}.
+$!0!Tt{s}(!Tt{0})+n !eq !Tt{s}(n)$.
+$!0!1!S !Tt{even}(!Tt{s}(n))!2$!by{Lemma}{odd:succ:even}.
+$!0!1!S !Tt{even}(!Tt{s}(!Tt{0})+n)!2$.
+!Eass{!0!1!1!S !Tt{odd}(n)!2!to !1!S !Tt{even}(!Tt{s}(!Tt{0})+n)!2!2}
+!Estp{!0!1!all[n]!,!1(!1!S !Tt{odd}(n)!2!to !1!S !Tt{even}(!Tt{s}(!Tt{0})+n)!2)!2!2}
+!Stp{$!0!1!all[n]!,!1(!1!S !Tt{odd}(n)!2!to !1!S !Tt{even}(m+n)!2)!2!2$ and $!0!1!S !Tt{odd}(m)!2$}
+!Ass{!0!1!S !Tt{odd}(n)!2}
+$!0!1!1!S !Tt{odd}(m)!2!to !1!S !Tt{nat}(m)!2!2$!by{Lemma}{odd:types}.
+$!0!1!S !Tt{nat}(m)!2$.
+$!0!1!1!S !Tt{odd}(n)!2!to !1!S !Tt{nat}(n)!2!2$!by{Lemma}{odd:types}.
+$!0!1!S !Tt{nat}(n)!2$.
+$!0!1!S !Tt{nat}(!Tt{s}(m))!2$.
+$!0!1!S !Tt{nat}(!Tt{s}(!Tt{s}(m)))!2$.
+$!0!Tt{s}(!Tt{s}(m))+n !eq !Tt{s}(!Tt{s}(m)+n)$!by{Corollary}{plus:successor}.
+$!0!Tt{s}(m)+n !eq !Tt{s}(m+n)$!by{Corollary}{plus:successor}.
+$!0!Tt{s}(!Tt{s}(m))+n !eq !Tt{s}(!Tt{s}(m+n))$.
+$!0!1!1!S !Tt{odd}(n)!2!to !1!S !Tt{even}(m+n)!2!2$.
+$!0!1!S !Tt{even}(m+n)!2$.
+$!0!1!S !Tt{even}(!Tt{s}(!Tt{s}(m+n)))!2$.
+$!0!1!S !Tt{even}(!Tt{s}(!Tt{s}(m))+n)!2$.
+!Eass{!0!1!1!S !Tt{odd}(n)!2!to !1!S !Tt{even}(!Tt{s}(!Tt{s}(m))+n)!2!2}
+!Estp{!0!1!all[n]!,!1(!1!S !Tt{odd}(n)!2!to !1!S !Tt{even}(!Tt{s}(!Tt{s}(m))+n)!2)!2!2}
+!Eind}
+!Epr
+
+!lemma{even:plus:odd}{!0!1!all[m,n]!,!1(!1!1!S !Tt{even}(m)!2!land !1!S !Tt{odd}(n)!2!2!to !1!S !Tt{odd}(m+n)!2)!2!2}
+!Pr{
+!Ind{$!0!1!all[m]!,!1(!1!S !Tt{even}(m)!2!to !1!all[n]!,!1(!1!S !Tt{odd}(n)!2!to !1!S !Tt{odd}(m+n)!2)!2!2)!2!2$}
+!Stp{none}
+!Ass{!0!1!S !Tt{odd}(n)!2}
+$!0!1!1!S !Tt{odd}(n)!2!to !1!S !Tt{nat}(n)!2!2$!by{Lemma}{odd:types}.
+$!0!1!S !Tt{nat}(n)!2$.
+$!0!Tt{0}+n !eq n$!by{Corollary}{plus:zero}.
+$!0!1!S !Tt{odd}(!Tt{0}+n)!2$.
+!Eass{!0!1!1!S !Tt{odd}(n)!2!to !1!S !Tt{odd}(!Tt{0}+n)!2!2}
+!Estp{!0!1!all[n]!,!1(!1!S !Tt{odd}(n)!2!to !1!S !Tt{odd}(!Tt{0}+n)!2)!2!2}
+!Stp{$!0!1!all[n]!,!1(!1!S !Tt{odd}(n)!2!to !1!S !Tt{odd}(m+n)!2)!2!2$ and $!0!1!S !Tt{even}(m)!2$}
+!Ass{!0!1!S !Tt{odd}(n)!2}
+$!0!1!1!S !Tt{even}(m)!2!to !1!S !Tt{nat}(m)!2!2$!by{Lemma}{even:types}.
+$!0!1!S !Tt{nat}(m)!2$.
+$!0!1!1!S !Tt{odd}(n)!2!to !1!S !Tt{nat}(n)!2!2$!by{Lemma}{odd:types}.
+$!0!1!S !Tt{nat}(n)!2$.
+$!0!1!S !Tt{nat}(!Tt{s}(m))!2$.
+$!0!1!S !Tt{nat}(!Tt{s}(!Tt{s}(m)))!2$.
+$!0!Tt{s}(!Tt{s}(m))+n !eq !Tt{s}(!Tt{s}(m)+n)$!by{Corollary}{plus:successor}.
+$!0!Tt{s}(m)+n !eq !Tt{s}(m+n)$!by{Corollary}{plus:successor}.
+$!0!Tt{s}(!Tt{s}(m))+n !eq !Tt{s}(!Tt{s}(m+n))$.
+$!0!1!1!S !Tt{odd}(n)!2!to !1!S !Tt{odd}(m+n)!2!2$.
+$!0!1!S !Tt{odd}(m+n)!2$.
+$!0!1!S !Tt{odd}(!Tt{s}(!Tt{s}(m+n)))!2$.
+$!0!1!S !Tt{odd}(!Tt{s}(!Tt{s}(m))+n)!2$.
+!Eass{!0!1!1!S !Tt{odd}(n)!2!to !1!S !Tt{odd}(!Tt{s}(!Tt{s}(m))+n)!2!2}
+!Estp{!0!1!all[n]!,!1(!1!S !Tt{odd}(n)!2!to !1!S !Tt{odd}(!Tt{s}(!Tt{s}(m))+n)!2)!2!2}
+!Eind}
+!Epr
+
+!lemma{odd:times:odd}{!0!1!all[m,n]!,!1(!1!1!S !Tt{odd}(m)!2!land !1!S !Tt{odd}(n)!2!2!to !1!S !Tt{odd}(m*n)!2)!2!2}
+!Pr{
+!Ind{$!0!1!all[m]!,!1(!1!S !Tt{odd}(m)!2!to !1!all[n]!,!1(!1!S !Tt{odd}(n)!2!to !1!S !Tt{odd}(m*n)!2)!2!2)!2!2$}
+!Stp{none}
+!Ass{!0!1!S !Tt{odd}(n)!2}
+$!0!1!1!S !Tt{odd}(n)!2!to !1!S !Tt{nat}(n)!2!2$!by{Lemma}{odd:types}.
+$!0!1!S !Tt{nat}(n)!2$.
+$!0!Tt{s}(!Tt{0})*n !eq n$!by{Lemma}{times:one}.
+$!0!1!S !Tt{odd}(!Tt{s}(!Tt{0})*n)!2$.
+!Eass{!0!1!1!S !Tt{odd}(n)!2!to !1!S !Tt{odd}(!Tt{s}(!Tt{0})*n)!2!2}
+!Estp{!0!1!all[n]!,!1(!1!S !Tt{odd}(n)!2!to !1!S !Tt{odd}(!Tt{s}(!Tt{0})*n)!2)!2!2}
+!Stp{$!0!1!all[n]!,!1(!1!S !Tt{odd}(n)!2!to !1!S !Tt{odd}(m*n)!2)!2!2$ and $!0!1!S !Tt{odd}(m)!2$}
+!Ass{!0!1!S !Tt{odd}(n)!2}
+$!0!1!1!S !Tt{odd}(m)!2!to !1!S !Tt{nat}(m)!2!2$!by{Lemma}{odd:types}.
+$!0!1!S !Tt{nat}(m)!2$.
+$!0!1!1!S !Tt{odd}(n)!2!to !1!S !Tt{nat}(n)!2!2$!by{Lemma}{odd:types}.
+$!0!1!S !Tt{nat}(n)!2$.
+$!0!1!S !Tt{nat}(!Tt{s}(m))!2$.
+$!0!1!S !Tt{nat}(!Tt{s}(!Tt{s}(m)))!2$.
+$!0!1!S !Tt{nat}(m*n)!2$!by{Corollary}{times:types}.
+$!0!1!S !Tt{nat}(n+m*n)!2$!by{Corollary}{plus:types}.
+$!0!1!S !Tt{nat}(n+n)!2$!by{Corollary}{plus:types}.
+$!0!Tt{s}(!Tt{s}(m))*n !eq n+!Tt{s}(m)*n$!by{Corollary}{times:successor}.
+$!0!Tt{s}(m)*n !eq n+m*n$!by{Corollary}{times:successor}.
+$!0!Tt{s}(!Tt{s}(m))*n !eq n+(n+m*n)$.
+$!0!1!1!S !Tt{odd}(n)!2!to !1!S !Tt{odd}(m*n)!2!2$.
+$!0!1!S !Tt{odd}(m*n)!2$.
+$!0!1!1!1!S !Tt{odd}(n)!2!land !1!S !Tt{odd}(n)!2!2!to !1!S !Tt{even}(n+n)!2!2$!by{Lemma}{odd:plus:odd}.
+$!0!1!1!S !Tt{odd}(n)!2!land !1!S !Tt{odd}(n)!2!2$.
+$!0!1!S !Tt{even}(n+n)!2$.
+$!0n+n+m*n !eq n+(n+m*n)$!by{Theorem}{plus:associative}.
+$!0n+(n+m*n) !eq n+n+m*n$.
+$!0!1!1!1!S !Tt{even}(n+n)!2!land !1!S !Tt{odd}(m*n)!2!2!to !1!S !Tt{odd}(n+n+m*n)!2!2$!by{Lemma}{even:plus:odd}.
+$!0!1!1!S !Tt{even}(n+n)!2!land !1!S !Tt{odd}(m*n)!2!2$.
+$!0!1!S !Tt{odd}(n+n+m*n)!2$.
+$!0!1!S !Tt{odd}(n+(n+m*n))!2$.
+$!0!1!S !Tt{odd}(!Tt{s}(!Tt{s}(m))*n)!2$.
+!Eass{!0!1!1!S !Tt{odd}(n)!2!to !1!S !Tt{odd}(!Tt{s}(!Tt{s}(m))*n)!2!2}
+!Estp{!0!1!all[n]!,!1(!1!S !Tt{odd}(n)!2!to !1!S !Tt{odd}(!Tt{s}(!Tt{s}(m))*n)!2)!2!2}
+!Eind}
+!Epr
+
+!lemma{odd:square:odd}{!0!1!all[p]!,!1(!1!1!S !Tt{nat}(p)!2!land !1!S !Tt{odd}(p)!2!2!to !1!S !Tt{odd}(!It{square}(p))!2)!2!2}
+!Pr{
+!Ass{!0!1!1!S !Tt{nat}(p)!2!land !1!S !Tt{odd}(p)!2!2}
+$!0!1!1!1!S !Tt{odd}(p)!2!land !1!S !Tt{odd}(p)!2!2!to !1!S !Tt{odd}(p*p)!2!2$!by{Lemma}{odd:times:odd}.
+$!0!1!1!S !Tt{odd}(p)!2!land !1!S !Tt{odd}(p)!2!2$.
+$!0!1!S !Tt{odd}(p*p)!2$.
+$!0!1!S !Tt{times}(p,p,!It{square}(p))!2$!by{Definition}{square/1}.
+$!0p*p !eq !It{square}(p)$!by{Definition}{@*/2}.
+$!0!1!S !Tt{odd}(!It{square}(p))!2$.
+!Eass{!0!1!1!1!S !Tt{nat}(p)!2!land !1!S !Tt{odd}(p)!2!2!to !1!S !Tt{odd}(!It{square}(p))!2!2}}
+!Epr
+
+!lemma{evenpp:evenp}{!0!1!all[p]!,!1(!1!1!S !Tt{nat}(p)!2!land !1!S !Tt{even}(!It{square}(p))!2!2!to !1!S !Tt{even}(p)!2)!2!2}
+!Pr{
+!Ass{!0!1!1!S !Tt{nat}(p)!2!land !1!S !Tt{even}(!It{square}(p))!2!2}
+$!0!1!S !Tt{nat}(p)!2$.
+$!0!1!S !Tt{even}(!It{square}(p))!2$.
+$!0!1!1!S !Tt{even}(p)!2!lor !1!S !Tt{odd}(p)!2!2$!by{Lemma}{nat:even:disj:odd}.
+!Cas{!0!1!S !Tt{even}(p)!2}
+!Ecas
+!Cas{!0!1!S !Tt{odd}(p)!2}
+$!0!1!1!1!S !Tt{nat}(p)!2!land !1!S !Tt{odd}(p)!2!2!to !1!S !Tt{odd}(!It{square}(p))!2!2$!by{Lemma}{odd:square:odd}.
+$!0!1!1!S !Tt{nat}(p)!2!land !1!S !Tt{odd}(p)!2!2$.
+$!0!1!S !Tt{odd}(!It{square}(p))!2$.
+$!0!1!1!S !Tt{odd}(!It{square}(p))!2!to !1!F !Tt{even}(!It{square}(p))!2!2$!by{Lemma}{odd:negation:even}.
+$!0!1!F !Tt{even}(!It{square}(p))!2$.
+$!0!bot$.
+!Ecas
+!Fin{!0!1!S !Tt{even}(p)!2}
+!Eass{!0!1!1!1!S !Tt{nat}(p)!2!land !1!S !Tt{even}(!It{square}(p))!2!2!to !1!S !Tt{even}(p)!2!2}}
+!Epr
+
+!theorem{sqrt2:irrational}{!0!1!all[p,q]!,!1(!1!1!S !Tt{nat}(p)!2!land !1!S !Tt{nat}(q)!2!land !It{coprime}(p,q)!2!to !1!lnot !It{square}(p) !eq !Tt{s}(!Tt{s}(!Tt{0}))*!It{square}(q)!2)!2!2}
+!Pr{
+!Ass{!0!1!1!S !Tt{nat}(p)!2!land !1!S !Tt{nat}(q)!2!land !It{coprime}(p,q)!2}
+!Con{!0!It{square}(p) !eq !Tt{s}(!Tt{s}(!Tt{0}))*!It{square}(q)}
+$!0!1!S !Tt{nat}(!It{square}(q))!2$!by{Lemma}{nat:natsquare}.
+$!0!Tt{s}(!Tt{s}(!Tt{0}))*!It{square}(q) !eq !It{square}(p)$.
+$!0!1!S !Tt{even}(!It{square}(p))!2$!by{Lemma}{twotimes:even}.
+$!0!1!S !Tt{even}(p)!2$!by{Lemma}{evenpp:evenp}.
+$!0!1!ex[r]!,!1(!1!S !Tt{nat}(r)!2!land p !eq !Tt{s}(!Tt{s}(!Tt{0}))*r)!2!2$!by{Lemma}{even:twotimes}.
+!Ex[r]{!0!1!1!S !Tt{nat}(r)!2!land p !eq !Tt{s}(!Tt{s}(!Tt{0}))*r!2}
+$!0!It{square}(p) !eq !It{square}(!Tt{s}(!Tt{s}(!Tt{0})))*!It{square}(r)$!by{Lemma}{npq:nnppqq}.
+$!0!It{square}(!Tt{s}(!Tt{s}(!Tt{0}))) !eq !Tt{s}(!Tt{s}(!Tt{s}(!Tt{s}(!Tt{0}))))$!by{Lemma}{sqr2:4}.
+$!0!It{square}(p) !eq !Tt{s}(!Tt{s}(!Tt{s}(!Tt{s}(!Tt{0}))))*!It{square}(r)$.
+$!0!Tt{s}(!Tt{s}(!Tt{s}(!Tt{s}(!Tt{0}))))*!It{square}(r) !eq !Tt{s}(!Tt{s}(!Tt{0}))*!It{square}(q)$.
+$!0!1!S !Tt{nat}(!It{square}(r))!2$!by{Lemma}{nat:natsquare}.
+$!0!1!S !Tt{nat}(!It{square}(q))!2$!by{Lemma}{nat:natsquare}.
+$!0!1!1!1!S !Tt{nat}(!It{square}(r))!2!land !1!S !Tt{nat}(!It{square}(q))!2!land !Tt{s}(!Tt{s}(!Tt{s}(!Tt{s}(!Tt{0}))))*!It{square}(r) !eq !Tt{s}(!Tt{s}(!Tt{0}))*!It{square}(q)!2!to !Tt{s}(!Tt{s}(!Tt{0}))*!It{square}(r) !eq !It{square}(q)!2$!by{Lemma}{simplify:by2}.
+$!0!Tt{s}(!Tt{s}(!Tt{0}))*!It{square}(r) !eq !It{square}(q)$.
+$!0!1!S !Tt{nat}(!It{square}(r))!2$!by{Lemma}{nat:natsquare}.
+$!0!1!S !Tt{even}(!It{square}(q))!2$!by{Lemma}{twotimes:even}.
+$!0!1!S !Tt{even}(q)!2$!by{Lemma}{evenpp:evenp}.
+!Eex{!0!1!S !Tt{even}(q)!2}
+$!0!It{divisor}(!Tt{s}(!Tt{s}(!Tt{0})),q)$!by{Lemma}{even:div2}.
+$!0!It{divisor}(!Tt{s}(!Tt{s}(!Tt{0})),p)$!by{Lemma}{even:div2}.
+$!0!1!S !Tt{nat}(!Tt{s}(!Tt{s}(!Tt{0})))!2$.
+$!0!It{coprime}(p,q)$.
+$!0!1!all[r]!,!1(!1!1!S !Tt{nat}(r)!2!land !It{divisor}(r,p)!land !It{divisor}(r,q)!2!to r !eq !Tt{s}(!Tt{0}))!2!2$!by{Definition}{coprime/2}.
+$!0!1!1!1!S !Tt{nat}(!Tt{s}(!Tt{s}(!Tt{0})))!2!land !It{divisor}(!Tt{s}(!Tt{s}(!Tt{0})),p)!land !It{divisor}(!Tt{s}(!Tt{s}(!Tt{0})),q)!2!to !Tt{s}(!Tt{s}(!Tt{0})) !eq !Tt{s}(!Tt{0})!2$.
+$!0!Tt{s}(!Tt{s}(!Tt{0})) !eq !Tt{s}(!Tt{0})$.
+$!0!bot$.
+!Econ{!0!1!lnot !It{square}(p) !eq !Tt{s}(!Tt{s}(!Tt{0}))*!It{square}(q)!2}
+$!0!1!lnot !It{square}(p) !eq !Tt{s}(!Tt{s}(!Tt{0}))*!It{square}(q)!2$.
+!Eass{!0!1!1!1!S !Tt{nat}(p)!2!land !1!S !Tt{nat}(q)!2!land !It{coprime}(p,q)!2!to !1!lnot !It{square}(p) !eq !Tt{s}(!Tt{s}(!Tt{0}))*!It{square}(q)!2!2}}
+!Epr
+
+!end

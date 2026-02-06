@@ -1,0 +1,18 @@
+
+:- assert_clauses(n(even,1),[
+ clause([n(even,1),[n(0,0)]],
+  [&],
+  []/0),
+ clause([n(even,1),[n(s,1),[n(s,1),$(x)]]],
+  [n(even,1),$(x)],
+  [x]/0)
+]).
+
+:- assert_clauses(n(odd,1),[
+ clause([n(odd,1),[n(s,1),[n(0,0)]]],
+  [&],
+  []/0),
+ clause([n(odd,1),[n(s,1),[n(s,1),$(x)]]],
+  [n(odd,1),$(x)],
+  [x]/0)
+]).

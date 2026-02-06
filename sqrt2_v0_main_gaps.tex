@@ -1,0 +1,49 @@
+\input proofmacros.tex
+!title{sqrt2_v0_main_gaps}
+
+!definition{coprime/2}{!0!1!all[p,q]!,!1(!It{coprime}(p,q)!eqv !1!all[r]!,!1(!1!1!S !Tt{nat}(r)!2!land !It{divisor}(r,p)!land !It{divisor}(r,q)!2!to r !eq !Tt{s}(!Tt{0}))!2!2)!2!2}
+
+!lemma{square:existence}{!0!1!all[n]!,!1(!1!S !Tt{nat}(n)!2!to !1!ex[p]!,!1!S !Tt{times}(n,n,p)!2!2)!2!2}
+!Pr{
+!Ass{!0!1!S !Tt{nat}(n)!2}
+$!0!1!1!S !Tt{nat}(n)!2!land !1!S !Tt{nat}(n)!2!2$.
+$!0!1!ex[z]!,!1!S !Tt{times}(n,n,z)!2!2$!by{Lemma}{times:existence}.
+!Eass{!0!1!1!S !Tt{nat}(n)!2!to !1!ex[p]!,!1!S !Tt{times}(n,n,p)!2!2!2}}
+!Epr
+
+!lemma{square:uniqueness}{!0!1!all[n,sn,sp]!,!1(!1!1!S !Tt{times}(n,n,sn)!2!land !1!S !Tt{times}(n,n,sp)!2!2!to sn !eq sp)!2!2}
+!Pr{
+!Ass{!0!1!1!S !Tt{times}(n,n,sn)!2!land !1!S !Tt{times}(n,n,sp)!2!2}
+$!0sn !eq sp$!by{Lemma}{times:uniqueness}.
+!Eass{!0!1!1!1!S !Tt{times}(n,n,sn)!2!land !1!S !Tt{times}(n,n,sp)!2!2!to sn !eq sp!2}}
+!Epr
+
+!definition{square/1}{!0!1!all[n,p]!,!1(!1!S !Tt{nat}(n)!2!to !1(!It{square}(n) !eq p!eqv !1!S !Tt{times}(n,n,p)!2)!2)!2!2}
+
+!theorem{sqrt2:irrational}{!0!1!all[p,q]!,!1(!1!1!S !Tt{nat}(p)!2!land !1!S !Tt{nat}(q)!2!land !It{coprime}(p,q)!2!to !1!lnot !It{square}(p) !eq !Tt{s}(!Tt{s}(!Tt{0}))*!It{square}(q)!2)!2!2}
+!Pr{
+!Ass{!0!1!1!S !Tt{nat}(p)!2!land !1!S !Tt{nat}(q)!2!land !It{coprime}(p,q)!2}
+!Con{!0!It{square}(p) !eq !Tt{s}(!Tt{s}(!Tt{0}))*!It{square}(q)}
+$!0!1!S !Tt{even}(!It{square}(p))!2$! by~{!bf GAP}.
+$!0!1!S !Tt{even}(p)!2$! by~{!bf GAP}.
+$!0!1!ex[r]!,!1(!1!S !Tt{nat}(r)!2!land p !eq !Tt{s}(!Tt{s}(!Tt{0}))*r)!2!2$! by~{!bf GAP}.
+!Ex[r]{!0!1!1!S !Tt{nat}(r)!2!land p !eq !Tt{s}(!Tt{s}(!Tt{0}))*r!2}
+$!0!It{square}(p) !eq !It{square}(!Tt{s}(!Tt{s}(!Tt{0})))*!It{square}(r)$! by~{!bf GAP}.
+$!0!Tt{s}(!Tt{s}(!Tt{s}(!Tt{s}(!Tt{0}))))*!It{square}(r) !eq !Tt{s}(!Tt{s}(!Tt{0}))*!It{square}(q)$! by~{!bf GAP}.
+$!0!Tt{s}(!Tt{s}(!Tt{0}))*!It{square}(r) !eq !It{square}(q)$! by~{!bf GAP}.
+$!0!1!S !Tt{even}(q)!2$! by~{!bf GAP}.
+!Eex{!0!1!S !Tt{even}(q)!2}
+$!0!It{divisor}(!Tt{s}(!Tt{s}(!Tt{0})),q)$! by~{!bf GAP}.
+$!0!It{divisor}(!Tt{s}(!Tt{s}(!Tt{0})),p)$! by~{!bf GAP}.
+$!0!1!S !Tt{nat}(!Tt{s}(!Tt{s}(!Tt{0})))!2$.
+$!0!It{coprime}(p,q)$.
+$!0!1!all[r]!,!1(!1!1!S !Tt{nat}(r)!2!land !It{divisor}(r,p)!land !It{divisor}(r,q)!2!to r !eq !Tt{s}(!Tt{0}))!2!2$!by{Definition}{coprime/2}.
+$!0!1!1!1!S !Tt{nat}(!Tt{s}(!Tt{s}(!Tt{0})))!2!land !It{divisor}(!Tt{s}(!Tt{s}(!Tt{0})),p)!land !It{divisor}(!Tt{s}(!Tt{s}(!Tt{0})),q)!2!to !Tt{s}(!Tt{s}(!Tt{0})) !eq !Tt{s}(!Tt{0})!2$.
+$!0!Tt{s}(!Tt{s}(!Tt{0})) !eq !Tt{s}(!Tt{0})$.
+$!0!bot$.
+!Econ{!0!1!lnot !It{square}(p) !eq !Tt{s}(!Tt{s}(!Tt{0}))*!It{square}(q)!2}
+$!0!1!lnot !It{square}(p) !eq !Tt{s}(!Tt{s}(!Tt{0}))*!It{square}(q)!2$.
+!Eass{!0!1!1!1!S !Tt{nat}(p)!2!land !1!S !Tt{nat}(q)!2!land !It{coprime}(p,q)!2!to !1!lnot !It{square}(p) !eq !Tt{s}(!Tt{s}(!Tt{0}))*!It{square}(q)!2!2}}
+!Epr
+
+!end

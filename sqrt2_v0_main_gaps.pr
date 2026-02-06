@@ -1,0 +1,81 @@
+:- initialize.
+
+:- needs_gr(nat).
+:- needs_thm(nat).
+
+:- needs_gr(gcd).
+:- needs_thm(gcd).
+
+:- compile_gr(sqrt2).
+:- needs_gr(sqrt2).
+:- tex_file(sqrt2_v0_main_gaps).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+:- definition_pred(coprime,2,
+all [p,q]: coprime(?p,?q) 
+<=> (all r: succeeds nat(?r) & divisor(?r,?p) & divisor(?r,?q) => ?r = s(0))).
+
+:- lemma(square:existence,
+all n: succeeds nat(?n) => (ex p: succeeds times(?n,?n,?p)),
+assume(succeeds nat(?n),
+ [succeeds nat(?n) & succeeds nat(?n),
+  ex z: succeeds times(?n,?n,?z) by lemma(times:existence)],
+ ex p: succeeds times(?n,?n,?p))
+).
+
+:- lemma(square:uniqueness,
+all [n,sn,sp]: succeeds times(?n,?n,?sn) & succeeds times(?n,?n,?sp) => ?sn = ?sp,
+assume(succeeds times(?n,?n,?sn) & succeeds times(?n,?n,?sp),
+ [?sn = ?sp by lemma(times:uniqueness)],
+ ?sn = ?sp)
+).
+
+:- definition_fun(square,1,
+all [n,p]: succeeds nat(?n) => (square(?n) = ?p <=> succeeds times(?n,?n,?p)),
+existence by lemma(square:existence),
+uniqueness by lemma(square:uniqueness)).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+:- theorem(sqrt2:irrational,
+all [p,q]: succeeds nat(?p) & succeeds nat(?q) & coprime(?p,?q) 
+    => ~ (square(?p) = s(s(0)) * square(?q)),
+assume(succeeds nat(?p) & succeeds nat(?q) & coprime(?p,?q),
+[
+ contra(square(?p) = s(s(0)) * square(?q),
+  [
+   % p^2 is even
+   succeeds even(square(?p)) by gap,
+   % p is even
+   succeeds even(?p) by gap,
+   % there exists r st. p = 2 * r
+   ex r: succeeds nat(?r) & ?p = s(s(0)) @* ?r by gap,
+   exist(r, succeeds nat(?r) & ?p = s(s(0)) @* ?r,
+    [
+     % p^2 = 2^2 * r^2
+     square(?p) = square(s(s(0))) @* square(?r) by gap,
+     % 4 * r^2 = 2 * q^2
+     s(s(s(s(0)))) * square(?r) = s(s(0)) * square(?q) by gap,
+     % 2 * r^2 = q^2
+     s(s(0)) * square(?r) = square(?q) by gap,
+     % q is even
+     succeeds even(?q) by gap
+    ],
+   succeeds even(?q)),
+   % contradiction
+   divisor(s(s(0)),?q) by gap,
+   divisor(s(s(0)),?p) by gap,
+   succeeds nat(s(s(0))),
+   coprime(?p,?q),
+   (all r: succeeds nat(?r) & divisor(?r,?p) & divisor(?r,?q) => ?r = s(0)) by elimination(coprime,2),
+   succeeds nat(s(s(0))) & divisor(s(s(0)),?p) & divisor(s(s(0)),?q) => s(s(0)) = s(0),
+   s(s(0)) = s(0),
+   ff
+ ]),
+ ~ (square(?p) = s(s(0)) * square(?q))
+],
+~ (square(?p) = s(s(0)) * square(?q)))).
+
+
+:- bye.
