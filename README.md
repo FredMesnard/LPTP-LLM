@@ -24,8 +24,8 @@ The final proof without any gap.
 
 ## Applying ATPs to the proof files
 
-* Install the Vampire prover and the E prover locally
-* Install SWI-Prolog locally
+* Install [Vampire](https://vprover.github.io) and [E](https://wwwlehre.dhbw-stuttgart.de/~sschulz/E/E.html) locally
+* Install [SWI-Prolog](https://www.swi-prolog.org) locally
 
 The compiler from Prolog '.pl' file + LPTP proof '.pr' file 
 are compiled into the FOF syntax by 
