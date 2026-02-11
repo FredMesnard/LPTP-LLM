@@ -27,11 +27,11 @@ The final proof without any gap.
 * Install [Vampire](https://vprover.github.io) and [E](https://wwwlehre.dhbw-stuttgart.de/~sschulz/E/E.html) locally
 * Install [SWI-Prolog](https://www.swi-prolog.org) locally
 
-The compiler from Prolog '.pl' file + LPTP proof '.pr' file 
-are compiled into the FOF syntax by 
-a compiler avalilable as 'indp.pl'.
-It creates as many files as lemmas apeearing 
-in the proof file and run Vampire and E on each lemma,
+The Prolog '.pl' file + the LPTP proof '.pr' file 
+are compiled into FOF syntax by 
+a compiler available as 'indp.pl'.
+It creates as many files as lemmas appearing 
+in the proof file and runs Vampire and E on each lemma,
 with a timeout of 10 seconds for each prover.
 Please note that *the succees rate may vary* depending on
 the local machine.
