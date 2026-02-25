@@ -11,16 +11,16 @@
 The following files can be proof-checked with LPTP:
 
 
--  sqrt2\_v0\_main_gaps.pr   
+-  `sqrt2\_v0\_main_gaps.pr`   
 The initial proof file, with all gaps inside the main theorem.
 
--  sqrt2\_v1\_lemmas_gaps.pr     
+-  `sqrt2\_v1\_lemmas_gaps.pr`     
 All gaps in the proofs of the lemmas.
 
--  sqrt2\_v2\_no\_gap.pr   
+-  `sqrt2\_v2\_no\_gap.pr`   
 The final proof without any gap.
 
-- sqrt2\_v3\_epilog.pr   
+- `sqrt2\_v3\_epilog.pr`   
 Back to Prolog: An LPTP proof that the initial Prolog query cannot succeed. 
 
 The corresponding `*.tex` are TeX files (_not_ LaTeX files). They can be compiled into PDF files
