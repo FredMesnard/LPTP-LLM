@@ -78,6 +78,7 @@ filename_fofs_run(I,File):-
 filename_fofs_run(I,File):-
     filename_nbLemmas(File,N),
     1 =< I, I =< N,
+	%trace,
     shell('rm tmp_outputE; touch tmp_outputE'),
     shell('rm tmp_outputV; touch tmp_outputV'),
     write(N), writeln(' lemmas'),
@@ -378,15 +379,17 @@ write_LPTP_formula_to_TPTP(S,LPTPFormula) :- write_(S,LPTPFormula).
         write_(S,ex Id : F) :- !, write(S,'? ['), write__term(S,?(Id)), write(S,'] : '),write_(S,F).    
         write_(S,F) :- atomic(F), !, write_canonical(S,F).
         write_(S,succeeds(At)) :- !, 
-            At =.. [P|Args], atom_concat(P,'_succeeds',Ps), 
-            write_canonical(S,Ps),write(S,'('), write_terms(S,Args),write(S,')').
+            At =.. [P|Args], atom_concat(P,'_succeeds',Ps), write_canonical(S,Ps), 
+			(Args = [_|_] -> write(S,'('), write_terms(S,Args),write(S,')') ; true).
         write_(S,fails(At)) :- !, 
-            At =.. [P|Args], atom_concat(P,'_fails',Ps),
-            write_canonical(S,Ps),write(S,'('), write_terms(S,Args),write(S,')').
+            At =.. [P|Args], atom_concat(P,'_fails',Ps), write_canonical(S,Ps),
+			(Args = [_|_] -> write(S,'('), write_terms(S,Args),write(S,')') ; true).
         write_(S,terminates(At)) :- !, 
-            At =.. [P|Args], atom_concat(P,'_terminates',Ps), 
-            write_canonical(S,Ps),write(S,'('), write_terms(S,Args),write(S,')').
-        write_(S,Atom) :- Atom =.. [P|Args], write_canonical(S,P), write(S,'('), write_terms(S,Args),write(S,')').
+            At =.. [P|Args], atom_concat(P,'_terminates',Ps), write_canonical(S,Ps),
+			(Args = [_|_] -> write(S,'('), write_terms(S,Args),write(S,')') ; true).
+        write_(S,Atom) :- 
+			Atom =.. [P|Args], write_canonical(S,P), 
+			(Args = [_|_] -> write(S,'('), write_terms(S,Args),write(S,')') ; true).
             
             write_terms(S,[T]) :- !, write__term(S,T).
             write_terms(S,[T1,T2|Us]) :- write__term(S,T1), write(S,','),write_terms(S,[T2|Us]).
@@ -1149,7 +1152,7 @@ axioms6and7(DefPIs,UndefPIs,Ax67) :-
         atom_concat(P,'_fails',PF), 
         atom_concat(P,'_terminates',PT), 
         Ax6 = ~(PS & PF),
-        Ax7 =  (PT => (PS | PS)),
+        Ax7 =  (PT => (PS \/ PF)),
         axioms6and7(PIs, Ax).
     axioms6and7([P/N|PIs], [Ax6,Ax7|Ax]) :-
         N > 0,
