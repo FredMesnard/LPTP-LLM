@@ -8,7 +8,7 @@
 
 ## Proof-checking the proof files 
 
-The following files can be proof-checked with LPTP.
+The following files can be proof-checked with LPTP:
 
 
 -  sqrt2\_v0\_main_gaps.pr   
