@@ -21,7 +21,7 @@ All gaps in the proofs of the lemmas.
 The final proof without any gap.
 
 - sqrt2\_v3\_epilog.pr   
-Back to Prolog: An LPTP proof that the initial query cannot succeed. 
+Back to Prolog: An LPTP proof that the initial Prolog query cannot succeed. 
 
 The corresponding `*.tex` are TeX files (_not_ LaTeX files). They can be compiled into PDF files
 with the usual tools.
