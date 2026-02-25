@@ -47,5 +47,8 @@ The Prolog '.pl' file + the LPTP proof '.pr' file are compiled into FOF syntax b
 > ?- filename_fofs_run('sqrt2\_final\_ATP/sqrt2').   
 > ...   
 
+-  To run the ATPs for  sqrt2\_v3\_epilog.pr
 
+> ?- filename_fofs_run('sqrt2\_epilog\_ATP/sqrt2').   
+> ...   
 
