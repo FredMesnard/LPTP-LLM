@@ -31,7 +31,7 @@ with the usual tools.
 * Install [Vampire](https://vprover.github.io) and [E](https://wwwlehre.dhbw-stuttgart.de/~sschulz/E/E.html) locally
 * Install [SWI-Prolog](https://www.swi-prolog.org) locally
 
-The Prolog '.pl' file + the LPTP proof '.pr' file are compiled into FOF syntax by a compiler available as 'indp.pl'. It creates as many files as lemmas appearing  in the proof file and runs Vampire and E on each lemma, with a timeout of 10 seconds for each prover. Please note that *the success rate may vary* depending on the local machine.
+The Prolog `.pl` file + the LPTP proof `.pr` file are compiled into FOF syntax by a compiler available as `indp.pl`. It creates as many files as lemmas appearing  in the proof file and runs Vampire and E on each lemma, with a timeout of 10 seconds for each prover. Please note that *the success rate may vary* depending on the local machine.
 
 
 - To run the ATPs for sqrt2\_v1\_lemmas_gaps.pr
