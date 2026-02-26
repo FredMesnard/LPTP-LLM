@@ -23,8 +23,10 @@ The final proof without any gap.
 - `sqrt2_v3_epilog.pr`   
 Back to Prolog: An LPTP proof that the initial Prolog query cannot succeed. 
 
-The corresponding `*.tex` are TeX files (_not_ LaTeX files). They can be compiled into PDF files
-with the usual tools.
+The corresponding `*.tex` are TeX files (_not_ LaTeX files). 
+They can be compiled into PDF files with the usual tools.
+Check that the first line of these files is `\input proofmacros.tex`.
+The file `proofmacros.tex`is included in the repository. 
 
 ## Applying ATPs to the proof files
 
