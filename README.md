@@ -34,23 +34,24 @@ The file `proofmacros.tex`is included in the repository.
 * Install [SWI-Prolog](https://www.swi-prolog.org) locally
 
 The Prolog `.pl` file + the LPTP proof `.pr` file are compiled into FOF syntax by a compiler available as `indp.pl`. It creates as many files as lemmas appearing  in the proof file and runs Vampire and E on each lemma, with a timeout of 10 seconds for each prover. Please note that *the success rate may vary* depending on the local machine.
+In the queries below, we admit about 100 properties coming from the LPTP libraries. They are considered as axioms.
 
 
-- To run the ATPs for `sqrt2_v1_lemmas_gaps.pr`
+- To run the ATPs for the last 9 properties of `sqrt2_v1_lemmas_gaps.pr`,
       
 > % swipl -f indp.pl   
 > Welcome to SWI-Prolog (threaded, 64 bits, version 10.0.0).  
 > ...   
-> ?- filename_fofs_run('sqrt2\_lemmas\_gaps\_ATP/sqrt2').   
+> ?- filename_last_fofs_run(9,'sqrt2_lemmas_gaps_ATP/sqrt2'). 
 > ...   
 
--  To run the ATPs for  `sqrt2_v2_no_gap.pr`
+-  To run the ATPs for the last 24 properties `sqrt2_v2_no_gap.pr`
 
-> ?- filename_fofs_run('sqrt2\_final\_ATP/sqrt2').   
+> ?- filename_last_fofs_run(24,'sqrt2_final_ATP/sqrt2'). 
 > ...   
 
--  To run the ATPs for  `sqrt2_v3_epilog.pr`
+-  To run the ATPs for the last 4 properties of `sqrt2_v3_epilog.pr`
 
-> ?- filename_fofs_run('sqrt2\_epilog\_ATP/sqrt2').   
+> ?- filename_last_fofs_run(4,'sqrt2_epilog_ATP/sqrt2').
 > ...   
 
