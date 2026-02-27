@@ -72,9 +72,18 @@ filename_fofs('add_peano/add_peano').
 filename_fofs_run(File):-
     filename_fofs_run(1,File).
 
+filename_last_fofs_run(I,File):-
+    filename_nbLemmas(File,N),
+    ((1 > I ;  I > N) -> 
+		writeln('Error in filename_last_fofs_run: wrong index')
+		; 
+		J is N-I+1,
+		filename_fofs_run(J,File)
+	).
+
 filename_fofs_run(I,File):-
     filename_nbLemmas(File,N),
-    (1 > I ;  I > N), !, writeln('Error in filename_fofs_run, wrong index').
+    (1 > I ;  I > N), !, writeln('Error in filename_fofs_run: wrong index').
 filename_fofs_run(I,File):-
     filename_nbLemmas(File,N),
     1 =< I, I =< N,
@@ -83,11 +92,11 @@ filename_fofs_run(I,File):-
     shell('rm tmp_outputV; touch tmp_outputV'),
     write(N), writeln(' lemmas'),
     filename_fofs_(I,N,File,0/SuccessV,0/SuccessE),
-    write(N), writeln(' lemmas, '), 
-    write(SuccessV), write(' proved by Vampire, '), 
-    Pv is (SuccessV*100)/N, write(' ratio: '), writeln(Pv),
-    write(SuccessE), write(' proved by Eprover, '), 
-    Pe is (SuccessE*100)/N, write(' ratio: '), writeln(Pe). 
+    write(SuccessV), writeln(' proved by Vampire'), 
+    % Pv is (SuccessV*100)/N, write('ratio: '), writeln(Pv),
+    write(SuccessE), writeln(' proved by Eprover'), 
+    % Pe is (SuccessE*100)/N, write(' ratio: '), writeln(Pe). 
+	true.
     
     filename_fofs_(P,N,_,Sv/Sv,Se/Se) :- P > N, !.
     filename_fofs_(I,N,F,Sv0/Sv,Se0/Se) :- I =< N, J is I +1,
@@ -125,7 +134,6 @@ filename_fofs_run(I,File):-
 /*
 filename_fofs_run('member/member').
 filename_fofs_run('add_peano/add_peano').
-% 
 filename_fofs_run('even_odd/even_odd').
 */
 
