@@ -45,16 +45,16 @@ We focus on the last properties, specific to our case-study.
 > % swipl -f indp.pl   
 > Welcome to SWI-Prolog (threaded, 64 bits, version 10.0.0).  
 > ...   
-> ?- filename_last_fofs_run(9,'sqrt2_lemmas_gaps_ATP/sqrt2'). 
+> ?- filename_last_fofs_run(9,'sqrt2_lemmas_gaps_ATP/sqrt2').    
 > ...   
 
 -  To run the ATPs for the last 24 properties `sqrt2_v2_no_gap.pr`
 
-> ?- filename_last_fofs_run(24,'sqrt2_final_ATP/sqrt2'). 
+> ?- filename_last_fofs_run(24,'sqrt2_final_ATP/sqrt2').    
 > ...   
 
 -  To run the ATPs for the last 4 properties of `sqrt2_v3_epilog.pr`
 
-> ?- filename_last_fofs_run(4,'sqrt2_epilog_ATP/sqrt2').
+> ?- filename_last_fofs_run(4,'sqrt2_epilog_ATP/sqrt2').   
 > ...   
 
