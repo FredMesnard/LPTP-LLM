@@ -33,8 +33,11 @@ The file `proofmacros.tex`is included in the repository.
 * Install [Vampire](https://vprover.github.io) and [E](https://wwwlehre.dhbw-stuttgart.de/~sschulz/E/E.html) locally
 * Install [SWI-Prolog](https://www.swi-prolog.org) locally
 
-The Prolog `.pl` file + the LPTP proof `.pr` file are compiled into FOF syntax by a compiler available as `indp.pl`. It creates as many files as lemmas appearing  in the proof file and runs Vampire and E on each lemma, with a timeout of 10 seconds for each prover. Please note that *the success rate may vary* depending on the local machine.
+The Prolog `.pl` file + the LPTP proof `.pr` file are compiled into FOF syntax by a compiler available as `indp.pl`. 
+The FOF syntax is a readable input format for most automated theorem provers.
+The compiler creates as many files as lemmas appearing  in the proof file and runs Vampire and E on each lemma, with a timeout of 10 seconds for each prover. Please note that *the success rate may vary* depending on the local machine.
 In the queries below, we admit about 100 properties coming from the LPTP libraries. They are considered as axioms.
+We focus on the last properties, specific to our case-study.
 
 
 - To run the ATPs for the last 9 properties of `sqrt2_v1_lemmas_gaps.pr`,
