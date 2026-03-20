@@ -28,6 +28,9 @@ They can be compiled into PDF files with the usual tools.
 Check that the first line of these files is `\input proofmacros.tex`.
 The file `proofmacros.tex`is included in the repository. 
 
+The file `dependency-graph-sqrt2.png` presents a graphical view
+of the depency graph of the whole proof.
+
 ## Applying ATPs to the proof files
 
 * Install [Vampire](https://vprover.github.io) and [E](https://wwwlehre.dhbw-stuttgart.de/~sschulz/E/E.html) locally
