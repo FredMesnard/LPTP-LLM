@@ -3,7 +3,7 @@
 
 * Install [LPTP](https://github.com/FredMesnard/LPTP) locally
 * Read and practice chapter 1 of the user manual
-* Download the repository LPTP-LLM
+* Download the repository LPTP-LLM-sqrt2
 
 
 ## Proof-checking the proof files 
